@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'SUIT-Regular';
+  font-weight: normal;
+  src: url('./fonts/SUIT-Regular.woff2') format('truetype');
+}
+
+@font-face {
+  font-family: 'SUIT-Medium';
+  font-weight: normal;
+  src: url('./fonts/SUIT-Medium.woff2') format('truetype');
+}
+
+body {
+  font-family: 'SUIT-Regular';
+}
