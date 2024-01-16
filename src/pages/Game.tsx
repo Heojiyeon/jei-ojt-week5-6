@@ -1,5 +1,21 @@
+import Iframe from '@/components/Iframe';
+import { createIndexedDB } from '@/data';
+import { useEffect } from 'react';
+
 const GamePage = () => {
-  return <div>game page</div>;
+  /**
+   * indexedDB 생성
+   *
+   */
+  useEffect(() => {
+    createIndexedDB();
+  }, []);
+
+  return (
+    <div>
+      <Iframe />
+    </div>
+  );
 };
 
 export default GamePage;
