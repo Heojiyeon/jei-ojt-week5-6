@@ -2,8 +2,9 @@ import { countOfCorrectAtom } from '@/atoms/problem';
 import { useSetAtom } from 'jotai';
 import { useEffect } from 'react';
 
+const { VITE_IFRAME_ORIGIN, VITE_ORIGIN } = import.meta.env;
+
 const Iframe = () => {
-  const { VITE_IFRAME_ORIGIN } = import.meta.env;
   const setCountOfCorrect = useSetAtom(countOfCorrectAtom);
 
   /**
@@ -13,10 +14,10 @@ const Iframe = () => {
     const handleMessage = (e: MessageEvent) => {
       e.preventDefault();
 
-      if (e.origin === VITE_IFRAME_ORIGIN && e.data) {
-        if (e.data === true) {
-          setCountOfCorrect(prevCountOfCorrect => (prevCountOfCorrect += 1));
-        }
+      if (e.origin === VITE_ORIGIN && e.data) {
+        console.log(e.data);
+        setCountOfCorrect(e.data);
+        window.location.replace('/result');
       }
     };
     window.addEventListener('message', handleMessage);
@@ -24,13 +25,13 @@ const Iframe = () => {
     return () => {
       window.removeEventListener('message', handleMessage);
     };
-  }, [setCountOfCorrect]);
+  });
 
   return (
     <iframe
       src={VITE_IFRAME_ORIGIN}
-      width={1200}
-      height={800}
+      width={900}
+      height={700}
       title="game content"
     >
       게임 컨텐츠를 불러오고 있습니다
