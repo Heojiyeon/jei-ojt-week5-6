@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 type InputProp = {
   id: string;
   type: string;
@@ -7,16 +5,7 @@ type InputProp = {
 };
 
 const Input = ({ id, type, size }: InputProp) => {
-  const [isSelected, setIsSelected] = useState(false);
-
-  return (
-    <input
-      id={id}
-      type={type}
-      className={`container ${size}`}
-      onClick={() => setIsSelected(true)}
-    />
-  );
+  return <input id={id} type={type} className={`container ${size}`} />;
 };
 
 export default Input;

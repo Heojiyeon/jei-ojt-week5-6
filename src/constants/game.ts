@@ -1,4 +1,11 @@
-export const GAMES = [
+import { Games } from '@/atoms/problem';
+
+export interface Game {
+  id: Games;
+  title: string;
+}
+
+export const GAMES: Game[] = [
   {
     id: 'number-game',
     title: '숫자 맞추기 게임',

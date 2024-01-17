@@ -1,3 +1,4 @@
+import { Games } from '@/atoms/problem';
 import Sidebar from '@/components/Sidebar';
 import Box from '@/components/common/Box';
 import { GAMES } from '@/constants/game';
@@ -14,9 +15,10 @@ const MainPage = () => {
     console.log('clicked menu', title);
   };
 
-  const handleBox = (id: string) => {
+  const handleBox = (id: Games) => {
     console.log('clicked box', id);
   };
+
   return (
     <div className="grid grid-cols-4">
       <Sidebar onClick={handleMenu} />
@@ -24,7 +26,11 @@ const MainPage = () => {
         {contentTitle === 'game' && (
           <div>
             {GAMES.map(game => (
-              <Box key={game.id} info={game} onClick={handleBox} />
+              <Box
+                key={game.id}
+                info={game}
+                onClick={() => handleBox(game.id)}
+              />
             ))}
           </div>
         )}
