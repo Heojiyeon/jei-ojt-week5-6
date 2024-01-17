@@ -1,21 +1,30 @@
+import { countOfCorrectAtom } from '@/atoms/problem';
+import { useSetAtom } from 'jotai';
 import { useEffect } from 'react';
 
 const Iframe = () => {
   const { VITE_IFRAME_ORIGIN } = import.meta.env;
+  const setCountOfCorrect = useSetAtom(countOfCorrectAtom);
+
   /**
    * iframe 내부에서 보낸 메시지 확인
    */
   useEffect(() => {
-    window.addEventListener(
-      'message',
-      e => {
-        if (e.origin === VITE_IFRAME_ORIGIN && e.data) {
-          console.log(e.data);
+    const handleMessage = (e: MessageEvent) => {
+      e.preventDefault();
+
+      if (e.origin === VITE_IFRAME_ORIGIN && e.data) {
+        if (e.data === true) {
+          setCountOfCorrect(prevCountOfCorrect => (prevCountOfCorrect += 1));
         }
-      },
-      false
-    );
-  }, []);
+      }
+    };
+    window.addEventListener('message', handleMessage);
+
+    return () => {
+      window.removeEventListener('message', handleMessage);
+    };
+  }, [setCountOfCorrect]);
 
   return (
     <iframe

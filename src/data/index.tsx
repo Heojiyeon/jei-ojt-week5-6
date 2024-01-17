@@ -1,4 +1,8 @@
-export const createIndexedDB = () => {
+type createIndexedDBProp = {
+  count: number;
+};
+
+export const createIndexedDB = ({ count }: createIndexedDBProp) => {
   const idxDB = window.indexedDB;
 
   if (!idxDB) {
@@ -23,6 +27,13 @@ export const createIndexedDB = () => {
    */
   request.onsuccess = e => {
     db = (e.target as IDBOpenDBRequest).result;
+    const transaction = db.transaction(['countOfCorrect'], 'readwrite');
+
+    const countOfCorrectStore = transaction.objectStore('countOfCorrect');
+
+    if (count) {
+      countOfCorrectStore.put(count, 'count');
+    }
   };
 
   /**
