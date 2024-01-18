@@ -11,7 +11,7 @@ export const createIndexedDB = ({ count }: createIndexedDBProp) => {
   }
 
   let db: IDBDatabase;
-  const request = idxDB.open('content');
+  const request = idxDB.open('result');
 
   /**
    * 저장소 내 objectStore 생성
@@ -51,7 +51,7 @@ export const getIndexedDB = () => {
   }
 
   return new Promise((resolve, reject) => {
-    const request = idxDB.open('content');
+    const request = idxDB.open('result');
 
     /**
      * 저장소 내 에러 처리
@@ -70,9 +70,9 @@ export const getIndexedDB = () => {
         .objectStore('countOfCorrect');
 
       problemStore.getAll().onsuccess = e => {
-        const problems = (e.target as IDBOpenDBRequest).result;
-
-        resolve(problems);
+        const counts = (e.target as IDBOpenDBRequest).result;
+        console.log('counts', counts);
+        resolve(counts);
       };
     };
   });

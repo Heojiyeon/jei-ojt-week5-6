@@ -16,7 +16,7 @@ const Iframe = () => {
 
       if (e.origin === VITE_ORIGIN && e.data) {
         console.log(e.data);
-        setCountOfCorrect(e.data);
+        setCountOfCorrect(e.data[0]);
         window.location.replace('/result');
       }
     };
