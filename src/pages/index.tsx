@@ -16,7 +16,9 @@ const MainPage = () => {
   };
 
   const handleBox = (id: Games) => {
-    console.log('clicked box', id);
+    if (id === 'number-game') {
+      window.location.replace('/game');
+    }
   };
 
   return (
