@@ -1,11 +1,9 @@
-import { countOfCorrectAtom } from '@/atoms/problem';
 import Result from '@/components/Result';
 import { getIndexedDB } from '@/data';
-import { useAtomValue } from 'jotai';
+import { GameResult } from '@/types/problem';
 import { useEffect, useState } from 'react';
 
 const ResultPage = () => {
-  const countOfCorrect = useAtomValue(countOfCorrectAtom);
   const [currentCountOfCorrect, setCurrentCountOfCorrect] = useState<number>(0);
 
   const fetchData = async () => {
@@ -14,13 +12,11 @@ const ResultPage = () => {
 
   useEffect(() => {
     const handleCountOfCorrect = async () => {
-      const recievedCountOfCorrect = (await fetchData()) as number;
-      if (!recievedCountOfCorrect) {
-        console.log(countOfCorrect);
-        setCurrentCountOfCorrect(countOfCorrect);
-      } else {
-        setCurrentCountOfCorrect(recievedCountOfCorrect);
-      }
+      const recievedResults = (await fetchData()) as GameResult[];
+      const recentResult = recievedResults.sort((a, b) => b.order - a.order)[0]
+        .count;
+
+      setCurrentCountOfCorrect(recentResult as number);
     };
 
     handleCountOfCorrect();

@@ -1,8 +1,8 @@
-type createIndexedDBProp = {
-  count: number;
-};
+import { GameResult } from '@/types/problem';
 
-export const createIndexedDB = ({ count }: createIndexedDBProp) => {
+type addIndexedDBProp = GameResult;
+
+export const createIndexedDB = () => {
   const idxDB = window.indexedDB;
 
   if (!idxDB) {
@@ -23,6 +23,25 @@ export const createIndexedDB = ({ count }: createIndexedDBProp) => {
   };
 
   /**
+   * 저장소 내 에러 처리
+   */
+  request.onerror = e => console.error(e);
+};
+
+/**
+ * 결과 저장하는 함수
+ */
+export const addIndexedDB = (result: addIndexedDBProp) => {
+  const idxDB = window.indexedDB;
+
+  if (!idxDB) {
+    alert('indexedDB를 지원하지 않는 브라우저입니다!');
+    return;
+  }
+
+  let db: IDBDatabase;
+  const request = idxDB.open('result');
+  /**
    * 트랜잭션(DB 상태 변화) 핸들링
    */
   request.onsuccess = e => {
@@ -31,17 +50,19 @@ export const createIndexedDB = ({ count }: createIndexedDBProp) => {
 
     const countOfCorrectStore = transaction.objectStore('countOfCorrect');
 
-    if (count) {
-      countOfCorrectStore.put(count, 'count');
+    if (result.count) {
+      const handledResult = {
+        order: JSON.stringify(result.order),
+        count: JSON.stringify(result.count),
+      };
+      countOfCorrectStore.add(handledResult, result.order);
     }
   };
-
-  /**
-   * 저장소 내 에러 처리
-   */
-  request.onerror = e => console.error(e);
 };
 
+/**
+ * 결과 가져오는 함수
+ */
 export const getIndexedDB = () => {
   const idxDB = window.indexedDB;
 
@@ -70,9 +91,8 @@ export const getIndexedDB = () => {
         .objectStore('countOfCorrect');
 
       problemStore.getAll().onsuccess = e => {
-        const counts = (e.target as IDBOpenDBRequest).result;
-        console.log('counts', counts);
-        resolve(counts);
+        const result = (e.target as IDBOpenDBRequest).result;
+        resolve(result);
       };
     };
   });

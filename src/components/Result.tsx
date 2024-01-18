@@ -10,8 +10,8 @@ const Result = ({ countOfCorrect }: ResultProp) => {
   return (
     <div>
       <div>
-        총 5문제 중 {countOfCorrect} 문제를 맞춰 {20 * countOfCorrect}점으로
-        게임을 {score >= 50 ? '성공' : '실패'}했어요.
+        총 5문제 중 {countOfCorrect} 문제를 맞춰 {score}점으로 게임을{' '}
+        {score >= 50 ? '성공' : '실패'}했어요.
         {score >= 50 ? '축하드려요!' : '조금 더 노력해봐요!'}
       </div>
       <Button

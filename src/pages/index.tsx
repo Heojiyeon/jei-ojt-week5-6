@@ -1,10 +1,8 @@
-import { Games } from '@/atoms/problem';
 import Sidebar from '@/components/Sidebar';
 import Box from '@/components/common/Box';
 import { GAMES } from '@/constants/game';
+import { ContentTitle, Games } from '@/types/problem';
 import { useState } from 'react';
-
-export type ContentTitle = 'game' | 'statistics' | 'badge';
 
 const MainPage = () => {
   const [contentTitle, setContentTitle] = useState<ContentTitle>('game');

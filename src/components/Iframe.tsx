@@ -1,22 +1,37 @@
-import { countOfCorrectAtom } from '@/atoms/problem';
-import { useSetAtom } from 'jotai';
+import { addIndexedDB, getIndexedDB } from '@/data';
+import { GameResult } from '@/types/problem';
 import { useEffect } from 'react';
 
 const { VITE_IFRAME_ORIGIN, VITE_ORIGIN } = import.meta.env;
 
 const Iframe = () => {
-  const setCountOfCorrect = useSetAtom(countOfCorrectAtom);
-
   /**
    * iframe 내부에서 보낸 메시지 확인
    */
+
+  const fetchData = async () => {
+    return await getIndexedDB();
+  };
+
   useEffect(() => {
-    const handleMessage = (e: MessageEvent) => {
+    const handleMessage = async (e: MessageEvent) => {
       e.preventDefault();
 
       if (e.origin === VITE_ORIGIN && e.data) {
-        console.log(e.data);
-        setCountOfCorrect(e.data[0]);
+        // 가져와서 length 체크
+        const checkResultLength = async () => {
+          const currentLength = (await fetchData()) as GameResult[];
+          return currentLength.length;
+        };
+
+        const currentLength = await checkResultLength();
+
+        // length에 따라 order 부여 후 DB에 add
+        const currentResult = {
+          order: currentLength as unknown as number,
+          count: e.data[0],
+        };
+        addIndexedDB(currentResult);
         window.location.replace('/result');
       }
     };
