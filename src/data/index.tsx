@@ -50,13 +50,12 @@ export const addIndexedDB = (result: addIndexedDBProp) => {
 
     const countOfCorrectStore = transaction.objectStore('countOfCorrect');
 
-    if (result.count) {
-      const handledResult = {
-        order: JSON.stringify(result.order),
-        count: JSON.stringify(result.count),
-      };
-      countOfCorrectStore.add(handledResult, result.order);
-    }
+    const handledResult = {
+      order: JSON.stringify(result.order),
+      count: JSON.stringify(result.count),
+    };
+
+    countOfCorrectStore.add(handledResult, result.order);
   };
 };
 

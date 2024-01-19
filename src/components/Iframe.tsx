@@ -18,6 +18,7 @@ const Iframe = () => {
       e.preventDefault();
 
       if (e.origin === VITE_ORIGIN && e.data) {
+        console.log('받은 메시지', e.data);
         // 가져와서 length 체크
         const checkResultLength = async () => {
           const currentLength = (await fetchData()) as GameResult[];
