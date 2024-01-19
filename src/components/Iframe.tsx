@@ -2,9 +2,11 @@ import { addIndexedDB, getIndexedDB } from '@/data';
 import { GameResult } from '@/types/problem';
 import { useEffect } from 'react';
 
-const { VITE_IFRAME_ORIGIN, VITE_ORIGIN } = import.meta.env;
+const { VITE_IFRAME_ORIGIN_NUMBER, VITE_IFRAME_ORIGIN_SITUATION, VITE_ORIGIN } =
+  import.meta.env;
 
 const Iframe = () => {
+  const gameType = window.localStorage.getItem('gameType');
   /**
    * iframe 내부에서 보낸 메시지 확인
    */
@@ -18,7 +20,6 @@ const Iframe = () => {
       e.preventDefault();
 
       if (e.origin === VITE_ORIGIN && e.data) {
-        console.log('받은 메시지', e.data);
         // 가져와서 length 체크
         const checkResultLength = async () => {
           const currentLength = (await fetchData()) as GameResult[];
@@ -41,11 +42,15 @@ const Iframe = () => {
     return () => {
       window.removeEventListener('message', handleMessage);
     };
-  });
+  }, []);
 
   return (
     <iframe
-      src={VITE_IFRAME_ORIGIN}
+      src={
+        gameType === 'number-game'
+          ? VITE_IFRAME_ORIGIN_NUMBER
+          : VITE_IFRAME_ORIGIN_SITUATION
+      }
       width={900}
       height={700}
       title="game content"

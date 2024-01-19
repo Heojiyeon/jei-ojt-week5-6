@@ -15,6 +15,10 @@ const MainPage = () => {
 
   const handleBox = (id: Games) => {
     if (id === 'number-game') {
+      window.localStorage.setItem('gameType', 'number-game');
+      window.location.replace('/game');
+    } else if (id === 'situation-game') {
+      window.localStorage.setItem('gameType', 'situation-game');
       window.location.replace('/game');
     }
   };
