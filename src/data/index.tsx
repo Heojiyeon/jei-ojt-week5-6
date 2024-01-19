@@ -56,6 +56,7 @@ export const addIndexedDB = ({ gameType, result }: addIndexedDBProp) => {
     const handledResult = {
       order: JSON.stringify(result.order),
       count: JSON.stringify(result.count),
+      elapsedTime: result.elapsedTime,
     };
 
     gameResultStore.add(handledResult, result.order);

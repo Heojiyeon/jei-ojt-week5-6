@@ -19,6 +19,19 @@ const Iframe = () => {
     const handleMessage = async (e: MessageEvent) => {
       e.preventDefault();
 
+      // 소요 시간 계산
+      const calculateElapsedTime = () => {
+        const endTime = new Date().getTime();
+        const startTime = window.localStorage.getItem('gameStartTime');
+        let currentElapsedTime: number;
+
+        if (startTime !== null) {
+          currentElapsedTime = (endTime - Number(startTime)) / 1000;
+          return currentElapsedTime;
+        }
+      };
+      const elapsedTime = calculateElapsedTime()!;
+
       const gameType = window.localStorage.getItem('gameType');
 
       // 게임 유형에 따라 결과를 저장하는 함수
@@ -35,7 +48,9 @@ const Iframe = () => {
         const currentResult = {
           order: currentLength as unknown as number,
           count: e.data[0],
+          elapsedTime: elapsedTime.toFixed(2) as unknown as string,
         };
+
         addIndexedDB({ gameType: gameType, result: currentResult });
         window.location.replace('/result');
       };
