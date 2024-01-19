@@ -1,25 +1,29 @@
 import Result from '@/components/Result';
 import { getIndexedDB } from '@/data';
-import { GameResult } from '@/types/problem';
+import { GameResult, Games } from '@/types/problem';
 import { useEffect, useState } from 'react';
 
 const ResultPage = () => {
   const [currentCountOfCorrect, setCurrentCountOfCorrect] = useState<number>(0);
 
-  const fetchData = async () => {
-    return await getIndexedDB();
+  const fetchData = async (gameType: Games) => {
+    return await getIndexedDB({ gameType: gameType as Games });
   };
 
   useEffect(() => {
-    const handleCountOfCorrect = async () => {
-      const recievedResults = (await fetchData()) as GameResult[];
+    const currentGameType = window.localStorage.getItem('gameType') as Games;
+
+    const handleCountOfCorrect = async (gameType: Games) => {
+      const recievedResults = (await fetchData(
+        gameType as Games
+      )) as GameResult[];
       const recentResult = recievedResults.sort((a, b) => b.order - a.order)[0]
         .count;
 
       setCurrentCountOfCorrect(recentResult as number);
     };
 
-    handleCountOfCorrect();
+    handleCountOfCorrect(currentGameType);
   }, []);
 
   return (

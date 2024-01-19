@@ -1,4 +1,4 @@
-import { Games } from '@/atoms/problem';
+import { Games } from '@/types/problem';
 
 export interface Game {
   id: Games;

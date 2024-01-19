@@ -1,6 +1,4 @@
-import { GameResult } from '@/types/problem';
-
-type addIndexedDBProp = GameResult;
+import { GameResult, Games } from '@/types/problem';
 
 export const createIndexedDB = () => {
   const idxDB = window.indexedDB;
@@ -19,7 +17,8 @@ export const createIndexedDB = () => {
    */
   request.onupgradeneeded = e => {
     db = (e.target as IDBOpenDBRequest).result;
-    db.createObjectStore('countOfCorrect');
+    db.createObjectStore('number-game-result');
+    db.createObjectStore('situation-game-result');
   };
 
   /**
@@ -31,7 +30,13 @@ export const createIndexedDB = () => {
 /**
  * 결과 저장하는 함수
  */
-export const addIndexedDB = (result: addIndexedDBProp) => {
+type addIndexedDBProp = {
+  gameType: string;
+  result: GameResult;
+};
+
+export const addIndexedDB = ({ gameType, result }: addIndexedDBProp) => {
+  console.log('추가할 거임', gameType, result);
   const idxDB = window.indexedDB;
 
   if (!idxDB) {
@@ -44,25 +49,43 @@ export const addIndexedDB = (result: addIndexedDBProp) => {
   /**
    * 트랜잭션(DB 상태 변화) 핸들링
    */
-  request.onsuccess = e => {
-    db = (e.target as IDBOpenDBRequest).result;
-    const transaction = db.transaction(['countOfCorrect'], 'readwrite');
-
-    const countOfCorrectStore = transaction.objectStore('countOfCorrect');
+  const createResultByGameType = (gameType: Games) => {
+    const transaction = db.transaction([`${gameType}-result`], 'readwrite');
+    const gameResultStore = transaction.objectStore(`${gameType}-result`);
 
     const handledResult = {
       order: JSON.stringify(result.order),
       count: JSON.stringify(result.count),
     };
 
-    countOfCorrectStore.add(handledResult, result.order);
+    gameResultStore.add(handledResult, result.order);
+  };
+
+  request.onsuccess = e => {
+    db = (e.target as IDBOpenDBRequest).result;
+
+    switch (gameType) {
+      case 'number-game':
+        createResultByGameType('number-game');
+        break;
+      case 'situation-game':
+        createResultByGameType('situation-game');
+        break;
+
+      default:
+        break;
+    }
   };
 };
 
 /**
  * 결과 가져오는 함수
  */
-export const getIndexedDB = () => {
+type getIndexedDBProp = {
+  gameType: string;
+};
+
+export const getIndexedDB = ({ gameType }: getIndexedDBProp) => {
   const idxDB = window.indexedDB;
 
   if (!idxDB) {
@@ -85,14 +108,25 @@ export const getIndexedDB = () => {
      * 트랜잭션(DB 상태 변화) 핸들링
      */
     request.onsuccess = () => {
-      const problemStore = request.result
-        .transaction(['countOfCorrect'])
-        .objectStore('countOfCorrect');
+      if (gameType === 'number-game') {
+        const resultStore = request.result
+          .transaction(['number-game-result'])
+          .objectStore('number-game-result');
 
-      problemStore.getAll().onsuccess = e => {
-        const result = (e.target as IDBOpenDBRequest).result;
-        resolve(result);
-      };
+        resultStore.getAll().onsuccess = e => {
+          const result = (e.target as IDBOpenDBRequest).result;
+          resolve(result);
+        };
+      } else if (gameType === 'situation-game') {
+        const resultStore = request.result
+          .transaction(['situation-game-result'])
+          .objectStore('situation-game-result');
+
+        resultStore.getAll().onsuccess = e => {
+          const result = (e.target as IDBOpenDBRequest).result;
+          resolve(result);
+        };
+      }
     };
   });
 };

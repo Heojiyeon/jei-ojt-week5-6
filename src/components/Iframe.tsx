@@ -1,28 +1,31 @@
 import { addIndexedDB, getIndexedDB } from '@/data';
-import { GameResult } from '@/types/problem';
-import { useEffect } from 'react';
+import { GameResult, Games } from '@/types/problem';
+import { useEffect, useState } from 'react';
 
 const { VITE_IFRAME_ORIGIN_NUMBER, VITE_IFRAME_ORIGIN_SITUATION, VITE_ORIGIN } =
   import.meta.env;
 
 const Iframe = () => {
-  const gameType = window.localStorage.getItem('gameType');
   /**
    * iframe 내부에서 보낸 메시지 확인
    */
+  const [gameType, setGameType] = useState<Games | null>(null);
 
-  const fetchData = async () => {
-    return await getIndexedDB();
+  const fetchData = async (gameType: Games) => {
+    return await getIndexedDB({ gameType });
   };
 
   useEffect(() => {
     const handleMessage = async (e: MessageEvent) => {
       e.preventDefault();
 
-      if (e.origin === VITE_ORIGIN && e.data) {
+      const gameType = window.localStorage.getItem('gameType');
+
+      // 게임 유형에 따라 결과를 저장하는 함수
+      const addResultByGameType = async (gameType: Games) => {
         // 가져와서 length 체크
         const checkResultLength = async () => {
-          const currentLength = (await fetchData()) as GameResult[];
+          const currentLength = (await fetchData(gameType)) as GameResult[];
           return currentLength.length;
         };
 
@@ -33,15 +36,38 @@ const Iframe = () => {
           order: currentLength as unknown as number,
           count: e.data[0],
         };
-        addIndexedDB(currentResult);
+        addIndexedDB({ gameType: gameType, result: currentResult });
         window.location.replace('/result');
+      };
+
+      if (e.origin === VITE_ORIGIN) {
+        switch (gameType) {
+          case 'number-game':
+            addResultByGameType('number-game');
+            break;
+          case 'situation-game':
+            addResultByGameType('situation-game');
+            break;
+
+          default:
+            break;
+        }
       }
     };
+
     window.addEventListener('message', handleMessage);
 
     return () => {
       window.removeEventListener('message', handleMessage);
     };
+  }, []);
+
+  useEffect(() => {
+    const currentGameType = window.localStorage.getItem('gameType');
+
+    if (currentGameType !== null) {
+      setGameType(currentGameType as Games);
+    }
   }, []);
 
   return (
