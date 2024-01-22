@@ -1,7 +1,7 @@
 import { MENUS } from '@/constants/menu';
-import { ContentTitle } from '@/pages';
 import Profile from './Profile';
 import Button from './common/Button';
+import { ContentTitle } from '@/types/problem';
 
 type SidebarProp = {
   onClick: (title: ContentTitle) => void;

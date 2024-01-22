@@ -36,7 +36,6 @@ type addIndexedDBProp = {
 };
 
 export const addIndexedDB = ({ gameType, result }: addIndexedDBProp) => {
-  console.log('추가할 거임', gameType, result);
   const idxDB = window.indexedDB;
 
   if (!idxDB) {

@@ -21,7 +21,7 @@ const ResultPage = () => {
         gameType as Games
       )) as GameResult[];
       const recentResult = recievedResults.sort((a, b) => b.order - a.order)[0];
-      setCurrentElapsedTime(recentResult.elapsedTime as string);
+      setCurrentElapsedTime(recentResult.elapsedTime);
       setCurrentCountOfCorrect(recentResult.count as number);
     };
 
