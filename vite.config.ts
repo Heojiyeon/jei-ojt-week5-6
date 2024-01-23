@@ -9,4 +9,13 @@ export default defineConfig({
   resolve: {
     alias: [{ find: '@', replacement: resolve(__dirname, './src') }],
   },
+  build: {
+    outDir: 'dist',
+    rollupOptions: {
+      input: {
+        main: 'src/main.tsx', // main.html에 대한 엔트리 포인트
+        problem: 'src/problemSrc/ProblemMain.tsx', // another.html에 대한 엔트리 포인트
+      },
+    },
+  },
 });
