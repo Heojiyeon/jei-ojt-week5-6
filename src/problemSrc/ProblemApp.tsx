@@ -1,5 +1,7 @@
+import MainPage from './pages';
+
 const ProblemApp = () => {
-  return <div>ProblemApp</div>;
+  return <MainPage />;
 };
 
 export default ProblemApp;
