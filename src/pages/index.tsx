@@ -24,40 +24,39 @@ const MainPage = () => {
     setContentTitle(title);
   };
 
-  /**
-   * 결과 데이터 불러오는 함수
-   */
-  const getResults = async () => {
-    const numberGameResult = (await getIndexedDB({
-      gameType: 'number-game',
-    })) as GameResult[];
-    const situationGameResult = (await getIndexedDB({
-      gameType: 'situation-game',
-    })) as GameResult[];
-
-    if (numberGameResult.length !== 0) {
-      setNumberGameStatistic(prevStatistic => {
-        return prevStatistic
-          ? [...prevStatistic, ...numberGameResult]
-          : [...numberGameResult];
-      });
-    }
-
-    if (situationGameResult.length !== 0) {
-      setSituationGameStatistic(prevStatistic => {
-        return prevStatistic
-          ? [...prevStatistic, ...situationGameResult]
-          : [...situationGameResult];
-      });
-    }
-  };
-
   // 메인 페이지 진입 시 게임 통계 자료 저장
   useEffect(() => {
+    /**
+     * 결과 데이터 불러오는 함수
+     */
+    const getResults = async () => {
+      const numberGameResult = (await getIndexedDB({
+        gameType: 'number-game',
+      })) as GameResult[];
+      const situationGameResult = (await getIndexedDB({
+        gameType: 'situation-game',
+      })) as GameResult[];
+
+      if (numberGameResult.length !== 0) {
+        setNumberGameStatistic(prevStatistic => {
+          return prevStatistic
+            ? [...prevStatistic, ...numberGameResult]
+            : [...numberGameResult];
+        });
+      }
+
+      if (situationGameResult.length !== 0) {
+        setSituationGameStatistic(prevStatistic => {
+          return prevStatistic
+            ? [...prevStatistic, ...situationGameResult]
+            : [...situationGameResult];
+        });
+      }
+    };
     return () => {
       getResults();
     };
-  }, []);
+  }, [setNumberGameStatistic, setSituationGameStatistic]);
 
   return (
     <div className="grid grid-cols-4">
