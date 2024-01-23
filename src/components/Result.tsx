@@ -1,4 +1,5 @@
 import { Games } from '@/types/problem';
+
 import Button from './common/Button';
 
 type ResultProp = {

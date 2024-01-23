@@ -5,30 +5,30 @@ module.exports = {
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:react-hooks/recommended',
+    'prettier',
     'plugin:prettier/recommended',
   ],
   ignorePatterns: ['dist', '.eslintrc.cjs'],
   parser: '@typescript-eslint/parser',
+  parserOptions: {
+    project: './tsconfig.json',
+    tsconfigRootDir: __dirname,
+  },
   plugins: [
     'react-refresh',
     '@typescript-eslint',
     'prettier',
-    'eslint-plugin-simple-import-sort',
-    'unused-imports',
     'import',
     'react-hooks',
+    'react',
+    'simple-import-sort',
   ],
   rules: {
     'react-refresh/only-export-components': [
       'warn',
       { allowConstantExport: true },
     ],
-    'prettier/prettier': [
-      'error',
-      {
-        endOfLine: 'auto',
-      },
-    ],
+    'prettier/prettier': 'error',
     'react/react-in-jsx-scope': 'off',
     'react/jsx-filename-extension': [1, { extensions: ['.ts', '.tsx'] }],
     '@typescript-eslint/no-non-null-assertion': 'off',
@@ -61,6 +61,5 @@ module.exports = {
     ],
     'no-console': ['error', { allow: ['warn', 'error'] }],
     'no-unused-vars': 'off',
-    'unused-imports/no-unused-imports-ts': ['error'],
   },
 };

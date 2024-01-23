@@ -1,6 +1,7 @@
 import { GAMES } from '@/constants/game';
-import Box from './common/Box';
 import { Games } from '@/types/problem';
+
+import Box from './common/Box';
 
 const GameList = () => {
   const handleBox = (id: Games) => {

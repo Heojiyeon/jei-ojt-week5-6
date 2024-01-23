@@ -1,7 +1,8 @@
+import axios, { AxiosError, AxiosResponse } from 'axios';
+import { useState } from 'react';
+
 import Button from '@/components/common/Button';
 import Input from '@/components/common/Input';
-import axios from 'axios';
-import { useState } from 'react';
 
 const LoginPage = () => {
   const [userId, setUserId] = useState('');
@@ -13,14 +14,17 @@ const LoginPage = () => {
     formData.append('userPassword', userPassword);
 
     try {
-      const response = await axios.post('/login', formData);
+      const response: AxiosResponse = await axios.post('/login', formData);
 
       if (response.status === 200) {
         window.location.replace('/main');
       }
-    } catch (error: any) {
-      console.error('에러 발생:', error.message);
-
+    } catch (error: unknown) {
+      if (error instanceof AxiosError) {
+        console.error('에러 발생:', error.message);
+      } else {
+        console.error('알 수 없는 에러:', error);
+      }
       alert('로그인 실패');
 
       setUserId('');

@@ -1,15 +1,10 @@
 import {
-  numberGameStatisticAtom,
-  situationGameStatisticAtom,
-} from '@/atoms/statistics';
-import { Games } from '@/types/problem';
-import {
   BarElement,
   CategoryScale,
   Chart as ChartJS,
   Legend,
-  LineElement,
   LinearScale,
+  LineElement,
   PointElement,
   Title,
   Tooltip,
@@ -17,6 +12,12 @@ import {
 import { useAtomValue } from 'jotai';
 import { useEffect, useState } from 'react';
 import { Bar, Line } from 'react-chartjs-2';
+
+import {
+  numberGameStatisticAtom,
+  situationGameStatisticAtom,
+} from '@/atoms/statistics';
+import { Games } from '@/types/problem';
 
 ChartJS.register(
   CategoryScale,

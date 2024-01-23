@@ -1,6 +1,7 @@
+import { useEffect, useState } from 'react';
+
 import { addIndexedDB, getIndexedDB } from '@/data';
 import { GameResult, Games } from '@/types/problem';
-import { useEffect, useState } from 'react';
 
 const { VITE_IFRAME_ORIGIN_NUMBER, VITE_IFRAME_ORIGIN_SITUATION, VITE_ORIGIN } =
   import.meta.env;

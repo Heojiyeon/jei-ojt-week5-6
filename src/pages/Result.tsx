@@ -1,7 +1,8 @@
+import { useEffect, useState } from 'react';
+
 import Result from '@/components/Result';
 import { getIndexedDB } from '@/data';
 import { GameResult, Games } from '@/types/problem';
-import { useEffect, useState } from 'react';
 
 const ResultPage = () => {
   const [currentCountOfCorrect, setCurrentCountOfCorrect] = useState<number>(0);

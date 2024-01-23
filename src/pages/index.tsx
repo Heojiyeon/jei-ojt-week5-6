@@ -1,3 +1,7 @@
+import { useSetAtom } from 'jotai';
+import { useEffect, useState } from 'react';
+import { TbPlayerTrackNextFilled } from 'react-icons/tb';
+
 import {
   numberGameStatisticAtom,
   situationGameStatisticAtom,
@@ -7,9 +11,6 @@ import Sidebar from '@/components/Sidebar';
 import Statistics from '@/components/Statistic';
 import { getIndexedDB } from '@/data';
 import { ContentTitle, GameResult, Games } from '@/types/problem';
-import { useSetAtom } from 'jotai';
-import { useEffect, useState } from 'react';
-import { TbPlayerTrackNextFilled } from 'react-icons/tb';
 
 const MainPage = () => {
   const [contentTitle, setContentTitle] = useState<ContentTitle>('game');

@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
-import AppRouter from './Router';
+
 import Layout from './components/Layout';
 import { createIndexedDB } from './data';
+import AppRouter from './Router';
 
 const App = () => {
   /**

@@ -1,5 +1,6 @@
-import Iframe from '@/components/Iframe';
 import { useEffect } from 'react';
+
+import Iframe from '@/components/Iframe';
 
 const GamePage = () => {
   useEffect(() => {
