@@ -36,7 +36,8 @@ function App() {
   useEffect(() => {
     // 데이터 받아서 화면에 보여주기
     const handleMessage = (e: MessageEvent) => {
-      setCurrentProblems(e.data.data);
+      console.log(e.data);
+      setCurrentProblems(e.data);
     };
 
     window.addEventListener('message', handleMessage);
