@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
@@ -5,11 +6,18 @@ import { addIndexedDB, getIndexedDB } from '@/data';
 import { GameResult, Games } from '@/types/problem';
 
 const Iframe = () => {
-  /**
-   * iframe 내부에서 보낸 메시지 확인
-   */
   const [isLoaded, setIsLoaded] = useState(false);
   const [gameType, setGameType] = useState<Games | null>(null);
+
+  /**
+   * 문제 데이터 요청
+   */
+  const { data } = useQuery({
+    queryKey: ['problem', gameType],
+    queryFn: () => getProblem(gameType as Games),
+    enabled: isLoaded && gameType ? true : false,
+    refetchOnMount: false,
+  });
 
   const fetchData = async (gameType: Games) => {
     return await getIndexedDB({ gameType });
@@ -73,28 +81,28 @@ const Iframe = () => {
     };
   }, [gameType]);
 
+  const getProblem = async (gameType: Games) => {
+    const response = await axios.get(`/problem/${gameType}`);
+    return response.data;
+  };
+
   useEffect(() => {
-    if (isLoaded && gameType) {
-      const postProblemMessage = async (gameType: Games) => {
-        const currentProblem = await axios.get(`/problem/${gameType}`);
-        // 데이터 보내기
-        const $iframe: HTMLIFrameElement | null =
-          document.querySelector('iframe');
+    if (data) {
+      // 데이터 보내기
+      const $iframe: HTMLIFrameElement | null =
+        document.querySelector('iframe');
 
-        $iframe?.contentWindow?.postMessage(
-          JSON.parse(JSON.stringify(currentProblem))
-        );
-      };
-
-      postProblemMessage(gameType);
+      $iframe?.contentWindow?.postMessage(data);
     }
+  }, [data]);
 
+  useEffect(() => {
     const currentGameType = window.localStorage.getItem('gameType');
 
     if (currentGameType !== null) {
       setGameType(currentGameType as Games);
     }
-  }, [gameType, isLoaded]);
+  }, []);
 
   return (
     <iframe
