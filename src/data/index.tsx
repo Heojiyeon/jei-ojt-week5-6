@@ -35,6 +35,7 @@ type addIndexedDBProp = {
   result: GameResult;
 };
 
+// 결과 데이터 저장
 export const addIndexedDB = ({ gameType, result }: addIndexedDBProp) => {
   const idxDB = window.indexedDB;
 

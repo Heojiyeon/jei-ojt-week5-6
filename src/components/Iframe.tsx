@@ -1,15 +1,14 @@
 import { useEffect, useState } from 'react';
 
 import { addIndexedDB, getIndexedDB } from '@/data';
+import problem from '@/mocks/problem.json';
 import { GameResult, Games } from '@/types/problem';
-
-const { VITE_IFRAME_ORIGIN_NUMBER, VITE_IFRAME_ORIGIN_SITUATION, VITE_ORIGIN } =
-  import.meta.env;
 
 const Iframe = () => {
   /**
    * iframe 내부에서 보낸 메시지 확인
    */
+  const [isLoaded, setIsLoaded] = useState(false);
   const [gameType, setGameType] = useState<Games | null>(null);
 
   const fetchData = async (gameType: Games) => {
@@ -33,8 +32,6 @@ const Iframe = () => {
       };
       const elapsedTime = calculateElapsedTime()!;
 
-      const gameType = window.localStorage.getItem('gameType');
-
       // 게임 유형에 따라 결과를 저장하는 함수
       const addResultByGameType = async (gameType: Games) => {
         // 가져와서 length 체크
@@ -56,18 +53,16 @@ const Iframe = () => {
         window.location.replace('/result');
       };
 
-      if (e.origin === VITE_ORIGIN) {
-        switch (gameType) {
-          case 'number-game':
-            addResultByGameType('number-game');
-            break;
-          case 'situation-game':
-            addResultByGameType('situation-game');
-            break;
+      switch (gameType) {
+        case 'number-game':
+          addResultByGameType('number-game');
+          break;
+        case 'situation-game':
+          addResultByGameType('situation-game');
+          break;
 
-          default:
-            break;
-        }
+        default:
+          break;
       }
     };
 
@@ -76,26 +71,31 @@ const Iframe = () => {
     return () => {
       window.removeEventListener('message', handleMessage);
     };
-  }, []);
+  }, [gameType]);
 
   useEffect(() => {
+    if (isLoaded) {
+      // 데이터 보내기
+      const $iframe: HTMLIFrameElement | null =
+        document.querySelector('iframe');
+
+      $iframe?.contentWindow?.postMessage(problem);
+    }
+
     const currentGameType = window.localStorage.getItem('gameType');
 
     if (currentGameType !== null) {
       setGameType(currentGameType as Games);
     }
-  }, []);
+  }, [isLoaded]);
 
   return (
     <iframe
-      src={
-        gameType === 'number-game'
-          ? VITE_IFRAME_ORIGIN_NUMBER
-          : VITE_IFRAME_ORIGIN_SITUATION
-      }
+      src="../../public/index.html"
       width={900}
       height={700}
       title="game content"
+      onLoad={() => setIsLoaded(true)}
     >
       게임 컨텐츠를 불러오고 있습니다
     </iframe>
