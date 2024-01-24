@@ -1,8 +1,7 @@
+import axios from 'axios';
 import { useEffect, useState } from 'react';
 
 import { addIndexedDB, getIndexedDB } from '@/data';
-import numberProblem from '@/mocks/numberProblem.json';
-import situationProblem from '@/mocks/situationProblem.json';
 import { GameResult, Games } from '@/types/problem';
 
 const Iframe = () => {
@@ -75,22 +74,19 @@ const Iframe = () => {
   }, [gameType]);
 
   useEffect(() => {
-    if (isLoaded) {
-      // 데이터 보내기
-      const $iframe: HTMLIFrameElement | null =
-        document.querySelector('iframe');
+    if (isLoaded && gameType) {
+      const postProblemMessage = async (gameType: Games) => {
+        const currentProblem = await axios.get(`/problem/${gameType}`);
+        // 데이터 보내기
+        const $iframe: HTMLIFrameElement | null =
+          document.querySelector('iframe');
 
-      switch (gameType) {
-        case 'number-game':
-          $iframe?.contentWindow?.postMessage(numberProblem);
-          break;
-        case 'situation-game':
-          $iframe?.contentWindow?.postMessage(situationProblem);
-          break;
+        $iframe?.contentWindow?.postMessage(
+          JSON.parse(JSON.stringify(currentProblem))
+        );
+      };
 
-        default:
-          break;
-      }
+      postProblemMessage(gameType);
     }
 
     const currentGameType = window.localStorage.getItem('gameType');
