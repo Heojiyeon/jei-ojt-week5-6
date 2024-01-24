@@ -20,7 +20,8 @@ const Result = ({
   return (
     <div>
       <div>
-        {gameTitle}을 {currentElapsedTime}초 플레이했어요.
+        {gameTitle}을 {parseFloat(currentElapsedTime).toFixed(2)}초
+        플레이했어요.
       </div>
       <div>
         총 5문제 중 {countOfCorrect} 문제를 맞춰 {score}점으로 게임을{' '}
