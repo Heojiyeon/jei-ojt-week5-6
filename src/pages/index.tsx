@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { useSetAtom } from 'jotai';
 import { useEffect, useState } from 'react';
 import { TbPlayerTrackNextFilled } from 'react-icons/tb';
@@ -9,8 +10,7 @@ import {
 import GameList from '@/components/GameList';
 import Sidebar from '@/components/Sidebar';
 import Statistics from '@/components/Statistic';
-import { getIndexedDB } from '@/data';
-import { ContentTitle, GameResult, Games } from '@/types/problem';
+import { ContentTitle, Games } from '@/types/problem';
 
 const MainPage = () => {
   const [contentTitle, setContentTitle] = useState<ContentTitle>('game');
@@ -30,12 +30,9 @@ const MainPage = () => {
      * 결과 데이터 불러오는 함수
      */
     const getResults = async () => {
-      const numberGameResult = (await getIndexedDB({
-        gameType: 'number-game',
-      })) as GameResult[];
-      const situationGameResult = (await getIndexedDB({
-        gameType: 'situation-game',
-      })) as GameResult[];
+      const numberGameResult = (await axios.get('/result/number-game')).data;
+      const situationGameResult = (await axios.get('/result/situation-game'))
+        .data;
 
       if (numberGameResult.length !== 0) {
         setNumberGameStatistic(prevStatistic => {

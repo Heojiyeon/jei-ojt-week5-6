@@ -1,7 +1,9 @@
 import { http, HttpResponse } from 'msw';
 
+import { getIndexedDB } from '@/data';
 import numberProblem from '@/mocks/numberProblem.json';
 import situationProblem from '@/mocks/situationProblem.json';
+import { GameResult, Games } from '@/types/problem';
 
 const { VITE_USER_NAME, VITE_USER_PASSWORD } = import.meta.env;
 
@@ -38,5 +40,30 @@ export const handlers = [
     }
 
     return HttpResponse.error();
+  }),
+  // 결과 데이터 요청
+  http.get('/result/:gameType', async ({ params }) => {
+    const { gameType } = params;
+
+    const getResults = async (gameType: Games) => {
+      switch (gameType) {
+        case 'number-game':
+          return (await getIndexedDB({
+            gameType: 'number-game',
+          })) as GameResult[];
+          break;
+        case 'situation-game':
+          return (await getIndexedDB({
+            gameType: 'situation-game',
+          })) as GameResult[];
+          break;
+
+        default:
+          break;
+      }
+    };
+
+    const currentResults = await getResults(gameType as Games);
+    return HttpResponse.json(currentResults);
   }),
 ];
