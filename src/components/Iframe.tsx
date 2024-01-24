@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 
 import { addIndexedDB, getIndexedDB } from '@/data';
-import problem from '@/mocks/problem.json';
+import numberProblem from '@/mocks/numberProblem.json';
+import situationProblem from '@/mocks/situationProblem.json';
 import { GameResult, Games } from '@/types/problem';
 
 const Iframe = () => {
@@ -79,7 +80,17 @@ const Iframe = () => {
       const $iframe: HTMLIFrameElement | null =
         document.querySelector('iframe');
 
-      $iframe?.contentWindow?.postMessage(problem);
+      switch (gameType) {
+        case 'number-game':
+          $iframe?.contentWindow?.postMessage(numberProblem);
+          break;
+        case 'situation-game':
+          $iframe?.contentWindow?.postMessage(situationProblem);
+          break;
+
+        default:
+          break;
+      }
     }
 
     const currentGameType = window.localStorage.getItem('gameType');
@@ -87,7 +98,7 @@ const Iframe = () => {
     if (currentGameType !== null) {
       setGameType(currentGameType as Games);
     }
-  }, [isLoaded]);
+  }, [gameType, isLoaded]);
 
   return (
     <iframe
