@@ -126,6 +126,23 @@
           "type": "text",
           "width": 37
         }
+      },
+      {
+        "name": "ea79a5ec-4b7d-4907-a9a6-28be6b226eef",
+        "info": {
+          "fontFamily": "SUIT-Regular",
+          "fontSize": 30,
+          "height": 33.9,
+          "left": 234,
+          "minWidth": 20,
+          "splitByGrapheme": false,
+          "stroke": "#3c3c3c",
+          "styles": [],
+          "text": "알맞은 수를 입력해주세요.",
+          "top": 100,
+          "type": "text",
+          "width": 358
+        }
       }
     ]
   },
@@ -256,6 +273,23 @@
           "type": "text",
           "width": 33
         }
+      },
+      {
+        "name": "ea79a5ec-4b7d-4907-a9a6-28be6b226eef",
+        "info": {
+          "fontFamily": "SUIT-Regular",
+          "fontSize": 30,
+          "height": 33.9,
+          "left": 234,
+          "minWidth": 20,
+          "splitByGrapheme": false,
+          "stroke": "#3c3c3c",
+          "styles": [],
+          "text": "알맞은 수를 입력해주세요.",
+          "top": 100,
+          "type": "text",
+          "width": 358
+        }
       }
     ]
   },
@@ -331,7 +365,7 @@
           "scaleX": 0.65,
           "scaleY": 0.65,
           "src": "https://sol-api.esls.io/images/A1/AI00000235.png",
-          "top": 251.95,
+          "top": 280,
           "type": "image",
           "width": 401
         }
@@ -346,7 +380,7 @@
           "scaleX": 0.65,
           "scaleY": 0.65,
           "src": "https://sol-api.esls.io/images/A1/AI00000235.png",
-          "top": 97.62,
+          "top": 150,
           "type": "image",
           "width": 401
         }
@@ -361,7 +395,7 @@
           "scaleX": 0.65,
           "scaleY": 0.65,
           "src": "https://sol-api.esls.io/images/A1/AI00000235.png",
-          "top": 256.96,
+          "top": 280,
           "type": "image",
           "width": 401
         }
@@ -415,6 +449,23 @@
           "top": 448,
           "type": "text",
           "width": 41
+        }
+      },
+      {
+        "name": "ea79a5ec-4b7d-4907-a9a6-28be6b226eef",
+        "info": {
+          "fontFamily": "SUIT-Regular",
+          "fontSize": 30,
+          "height": 33.9,
+          "left": 234,
+          "minWidth": 20,
+          "splitByGrapheme": false,
+          "stroke": "#3c3c3c",
+          "styles": [],
+          "text": "알맞은 수를 입력해주세요.",
+          "top": 100,
+          "type": "text",
+          "width": 358
         }
       }
     ]
@@ -552,6 +603,23 @@
           "type": "text",
           "width": 56
         }
+      },
+      {
+        "name": "ea79a5ec-4b7d-4907-a9a6-28be6b226eef",
+        "info": {
+          "fontFamily": "SUIT-Regular",
+          "fontSize": 30,
+          "height": 33.9,
+          "left": 234,
+          "minWidth": 20,
+          "splitByGrapheme": false,
+          "stroke": "#3c3c3c",
+          "styles": [],
+          "text": "알맞은 수를 입력해주세요.",
+          "top": 100,
+          "type": "text",
+          "width": 358
+        }
       }
     ]
   },
@@ -681,6 +749,23 @@
           "top": 403,
           "type": "text",
           "width": 48
+        }
+      },
+      {
+        "name": "ea79a5ec-4b7d-4907-a9a6-28be6b226eef",
+        "info": {
+          "fontFamily": "SUIT-Regular",
+          "fontSize": 30,
+          "height": 33.9,
+          "left": 234,
+          "minWidth": 20,
+          "splitByGrapheme": false,
+          "stroke": "#3c3c3c",
+          "styles": [],
+          "text": "알맞은 수를 입력해주세요.",
+          "top": 100,
+          "type": "text",
+          "width": 358
         }
       }
     ]
