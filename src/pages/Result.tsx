@@ -30,7 +30,7 @@ const ResultPage = () => {
   }, []);
 
   return (
-    <div>
+    <div className="flex justify-center">
       <Result
         currentElapsedTime={currentElapsedTime}
         countOfCorrect={currentCountOfCorrect}
