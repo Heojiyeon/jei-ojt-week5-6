@@ -17,6 +17,7 @@ const Iframe = () => {
     queryFn: () => getProblem(gameType as Games),
     enabled: isLoaded && gameType ? true : false,
     refetchOnMount: false,
+    refetchOnWindowFocus: false,
   });
   const getProblem = async (gameType: Games) => {
     const response = await axios.get(`/problem/${gameType}`);

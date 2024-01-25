@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { useSetAtom } from 'jotai';
 import { useEffect, useState } from 'react';
@@ -14,7 +15,6 @@ import { ContentTitle, Games } from '@/types/problem';
 
 const MainPage = () => {
   const [contentTitle, setContentTitle] = useState<ContentTitle>('game');
-
   const [targetGameTitle, setTargetGameTitle] = useState<Games>('number-game');
 
   const setNumberGameStatistic = useSetAtom(numberGameStatisticAtom);
@@ -24,15 +24,34 @@ const MainPage = () => {
     setContentTitle(title);
   };
 
+  /**
+   * 결과 데이터 불러오는 함수
+   */
+  const { data: numberData } = useQuery({
+    queryKey: ['numberGameResult'],
+    queryFn: () => getResult('number-game'),
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+  });
+
+  const { data: situationData } = useQuery({
+    queryKey: ['situationGameResult'],
+    queryFn: () => getResult('situation-game'),
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+  });
+
+  const getResult = async (gameType: Games) => {
+    const response = await axios.get(`/result/${gameType}`);
+
+    return response.data;
+  };
+
   // 메인 페이지 진입 시 게임 통계 자료 저장
   useEffect(() => {
-    /**
-     * 결과 데이터 불러오는 함수
-     */
-    const getResults = async () => {
-      const numberGameResult = (await axios.get('/result/number-game')).data;
-      const situationGameResult = (await axios.get('/result/situation-game'))
-        .data;
+    if (numberData && situationData) {
+      const numberGameResult = numberData;
+      const situationGameResult = situationData;
 
       if (numberGameResult.length !== 0) {
         setNumberGameStatistic(prevStatistic => {
@@ -49,11 +68,13 @@ const MainPage = () => {
             : [...situationGameResult];
         });
       }
-    };
-    return () => {
-      getResults();
-    };
-  }, [setNumberGameStatistic, setSituationGameStatistic]);
+    }
+  }, [
+    numberData,
+    setNumberGameStatistic,
+    setSituationGameStatistic,
+    situationData,
+  ]);
 
   return (
     <div className="grid grid-cols-4">
