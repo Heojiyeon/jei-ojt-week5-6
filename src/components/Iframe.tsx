@@ -1,9 +1,9 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQueries, UseQueryResult } from '@tanstack/react-query';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
 import { addIndexedDB } from '@/data';
-import { Games } from '@/types/problem';
+import { GameResult, Games } from '@/types/problem';
 
 const Iframe = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -12,13 +12,6 @@ const Iframe = () => {
   /**
    * 문제 데이터 요청
    */
-  const { data, isLoading, isSuccess } = useQuery({
-    queryKey: ['problem', gameType],
-    queryFn: () => getProblem(gameType as Games),
-    enabled: isLoaded && gameType ? true : false,
-    refetchOnMount: false,
-  });
-
   const getProblem = async (gameType: Games) => {
     const response = await axios.get(`/problem/${gameType}`);
     return response.data;
@@ -27,24 +20,48 @@ const Iframe = () => {
   /**
    * 결과 데이터 요청
    */
-  const { data: resultData, isPending: isResultPending } = useQuery({
-    queryKey: ['result', gameType],
-    queryFn: () => getResult(gameType as Games),
-  });
-
   const getResult = async (gameType: Games) => {
     const response = await axios.get(`/result/${gameType}`);
 
     return response.data;
   };
 
+  const queries: {
+    queryKey: [string, Games];
+    queryFn: () => Promise<GameResult[]>;
+    enabled?: boolean;
+    refetchOnMount?: boolean;
+  }[] = [
+    {
+      queryKey: ['problem', gameType!],
+      queryFn: () => getProblem(gameType as Games),
+      enabled: isLoaded && gameType ? true : false,
+      refetchOnMount: false,
+    },
+    {
+      queryKey: ['result', gameType!],
+      queryFn: () => getResult(gameType as Games),
+    },
+  ];
+
+  const results: UseQueryResult<GameResult[], Error>[] = useQueries({
+    queries: queries.map(query => ({
+      queryKey: query.queryKey,
+      queryFn: query.queryFn,
+      enabled: query.enabled,
+    })),
+  });
+
   useEffect(() => {
-    if (data) {
+    if (results) {
+      const problemData = results[0].data;
+      const resultData = results[1].data;
+
       // 데이터 보내기
       const $iframe: HTMLIFrameElement | null =
         document.querySelector('iframe');
 
-      $iframe?.contentWindow?.postMessage(data);
+      $iframe?.contentWindow?.postMessage(problemData);
 
       // 이벤트 리스너 등록
       const handleMessage = async (e: MessageEvent) => {
@@ -67,7 +84,7 @@ const Iframe = () => {
 
         // 게임 유형에 따라 결과를 저장하는 함수
         const addResultByGameType = async (gameType: Games) => {
-          const currentLength = await resultData.length;
+          const currentLength = resultData!.length;
 
           // length에 따라 order 부여 후 DB에 add
           const currentResult = {
@@ -99,7 +116,7 @@ const Iframe = () => {
         window.removeEventListener('message', handleMessage);
       };
     }
-  }, [data, gameType, isSuccess, resultData]);
+  }, [gameType, results]);
 
   useEffect(() => {
     const currentGameType = window.localStorage.getItem('gameType');
@@ -111,8 +128,10 @@ const Iframe = () => {
 
   return (
     <>
-      {isLoading && <div>문제를 불러오고 있습니다</div>}
-      {isSuccess && isResultPending && <div>결과를 불러오고 있습니다</div>}
+      {results[0].isLoading && <div>문제를 불러오고 있습니다</div>}
+      {results[0].isSuccess && results[1].isLoading && (
+        <div>결과를 불러오고 있습니다</div>
+      )}
       <iframe
         src="../../public/index.html"
         width={900}

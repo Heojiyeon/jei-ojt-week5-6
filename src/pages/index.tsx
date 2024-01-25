@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQueries, UseQueryResult } from '@tanstack/react-query';
 import axios from 'axios';
 import { useSetAtom } from 'jotai';
 import { useEffect, useState } from 'react';
@@ -13,7 +13,7 @@ import Badge from '@/components/Badge';
 import GameList from '@/components/GameList';
 import Sidebar from '@/components/Sidebar';
 import Statistics from '@/components/Statistic';
-import { ContentTitle, Games } from '@/types/problem';
+import { ContentTitle, GameResult, Games } from '@/types/problem';
 
 const MainPage = () => {
   const [contentTitle, setContentTitle] = useState<ContentTitle>('game');
@@ -26,16 +26,6 @@ const MainPage = () => {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const token = window.localStorage.getItem('token');
-
-    if (!token) {
-      navigate('/');
-    } else {
-      setIsLoading(false);
-    }
-  }, [navigate]);
-
   const handleMenu = (title: ContentTitle) => {
     setContentTitle(title);
   };
@@ -43,14 +33,25 @@ const MainPage = () => {
   /**
    * 결과 데이터 불러오는 함수
    */
-  const { data: numberData } = useQuery({
-    queryKey: ['numberGameResult'],
-    queryFn: () => getResult('number-game'),
-  });
+  const queries: {
+    queryKey: [string];
+    queryFn: () => Promise<GameResult[]>;
+  }[] = [
+    {
+      queryKey: ['numberGameResult'],
+      queryFn: () => getResult('number-game'),
+    },
+    {
+      queryKey: ['situationGameResult'],
+      queryFn: () => getResult('situation-game'),
+    },
+  ];
 
-  const { data: situationData } = useQuery({
-    queryKey: ['situationGameResult'],
-    queryFn: () => getResult('situation-game'),
+  const results: UseQueryResult<GameResult[], Error>[] = useQueries({
+    queries: queries.map(query => ({
+      queryKey: query.queryKey,
+      queryFn: query.queryFn,
+    })),
   });
 
   const getResult = async (gameType: Games) => {
@@ -61,36 +62,31 @@ const MainPage = () => {
 
   // 메인 페이지 진입 시 게임 통계 자료 저장
   useEffect(() => {
-    if (numberData && situationData) {
-      const numberGameResult = numberData;
-      const situationGameResult = situationData;
+    if (results) {
+      const numberGameResult = results[0].data;
+      const situationGameResult = results[1].data;
 
-      if (numberGameResult.length !== 0) {
-        setNumberGameStatistic(prevStatistic => {
-          return prevStatistic
-            ? [...prevStatistic, ...numberGameResult]
-            : [...numberGameResult];
-        });
-      } else {
-        setNumberGameStatistic([]);
-      }
+      numberGameResult &&
+        setNumberGameStatistic(
+          numberGameResult.length !== 0 ? numberGameResult : []
+        );
 
-      if (situationGameResult.length !== 0) {
-        setSituationGameStatistic(prevStatistic => {
-          return prevStatistic
-            ? [...prevStatistic, ...situationGameResult]
-            : [...situationGameResult];
-        });
-      } else {
-        setSituationGameStatistic([]);
-      }
+      situationGameResult &&
+        setSituationGameStatistic(
+          situationGameResult.length !== 0 ? situationGameResult : []
+        );
     }
-  }, [
-    numberData,
-    setNumberGameStatistic,
-    setSituationGameStatistic,
-    situationData,
-  ]);
+  }, [results, setNumberGameStatistic, setSituationGameStatistic]);
+
+  useEffect(() => {
+    const token = window.localStorage.getItem('token');
+
+    if (!token) {
+      navigate('/');
+    } else {
+      setIsLoading(false);
+    }
+  }, [navigate]);
 
   return (
     <>
