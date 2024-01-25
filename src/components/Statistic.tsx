@@ -99,7 +99,7 @@ const Statistics = ({ targetGameTitle }: StatisticsProp) => {
           setCurrentCount(prevCounts => {
             return prevCounts
               ? [...prevCounts, Number(count) * 20]
-              : [Number(count)];
+              : [Number(count) * 20];
           });
 
           setCurrentElapsedTime(prevElapsedTime => {

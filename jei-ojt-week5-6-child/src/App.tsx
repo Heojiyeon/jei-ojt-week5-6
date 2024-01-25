@@ -68,14 +68,11 @@ function App() {
 
       // 정답인 경우
       if (correctComponentName === currentComponentName) {
-        setCountOfCorrect(prevCountOfCorrect => (prevCountOfCorrect += 1));
-        console.log('정답 이라능!', countOfCorrect, '개');
-
         bubbleText = new fabric.Text('정답입니다!', {
-          fontSize: 30,
+          fontSize: 20,
           fill: '#0000FF',
           fontFamily: 'SUIT-Regular',
-          top: currentTop,
+          top: currentTop + 40,
           left: currentLeft,
         });
 
@@ -83,21 +80,11 @@ function App() {
       }
       // 오답인 경우
       else {
-        setCountOfCorrect(prevCountOfCorrect => {
-          // 정답이 없는 경우 0 저장
-          let result = 0;
-
-          if (prevCountOfCorrect) {
-            result = prevCountOfCorrect;
-          }
-          return result;
-        });
-
         bubbleText = new fabric.Text('오답입니다!', {
-          fontSize: 30,
+          fontSize: 20,
           fill: '#E5001A',
           fontFamily: 'SUIT-Regular',
-          top: currentTop,
+          top: currentTop + 40,
           left: currentLeft,
         });
 
@@ -105,8 +92,15 @@ function App() {
       }
 
       setTimeout(() => {
+        if (correctComponentName === currentComponentName) {
+          setCountOfCorrect(prevCountOfCorrect => (prevCountOfCorrect += 1));
+        } else {
+          setCountOfCorrect(prevCountOfCorrect => prevCountOfCorrect || 0);
+        }
+
         canvasRef.current?.remove(bubbleText);
         canvasRef.current?.clear();
+
         setCurrentProblemOrder(
           prevCurrentProblemOrder => (prevCurrentProblemOrder += 1)
         );
