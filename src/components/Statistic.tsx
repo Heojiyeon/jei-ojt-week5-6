@@ -17,7 +17,7 @@ import {
   numberGameStatisticAtom,
   situationGameStatisticAtom,
 } from '@/atoms/statistics';
-import { Games } from '@/types/problem';
+import { GameResult, Games } from '@/types/problem';
 
 ChartJS.register(
   CategoryScale,
@@ -63,18 +63,30 @@ const Statistics = ({ targetGameTitle }: StatisticsProp) => {
   );
   const [timeData, setTimeData] = useState<ChartData | null>(null);
 
+  const [currentTargetStatistic, setCurrentTargetStatistic] = useState<
+    GameResult[] | null
+  >(null);
+
   useEffect(() => {
     const setTargetData = (gameTitle: string) => {
+      // 초기화
+      setCurrentLabels(null);
+      setCurrentCount(null);
+      setCurrentElapsedTime(null);
+      setCurrentTargetStatistic(null);
+
       const targetStatistic =
         gameTitle === 'number-game'
           ? numberGameStatistic
           : situationGameStatistic;
 
       if (targetStatistic !== undefined) {
-        // 초기화
-        setCurrentLabels([]);
-        setCurrentCount([]);
-        setCurrentElapsedTime([]);
+        // 값이 빈 경우
+        if (targetStatistic?.length === 0) {
+          return;
+        }
+
+        setCurrentTargetStatistic(targetStatistic);
 
         targetStatistic?.map(statistic => {
           const { count, order, elapsedTime } = statistic;
@@ -205,24 +217,34 @@ const Statistics = ({ targetGameTitle }: StatisticsProp) => {
           />
         )}
       </div>
-      <div className="text-[18px] flex flex-col items-center mt-16">
-        <div className="flex">
-          {targetGameTitle === 'number-game'
-            ? '숫자 맞추기 게임'
-            : '상황 추론 게임'}
-          을&nbsp;
-          <div className=" text-[#FFA09C] font-bold">
-            총 {currentCount && currentCount?.length}번,{' '}
-            {currentElapsedTime
-              ?.reduce((a, b) => Number(a) + Number(b))
-              ?.toFixed(2)}
-            초&nbsp;
+
+      {!currentTargetStatistic ? (
+        <div className="text-[18px] flex flex-col items-center mt-16 opacity-80">
+          <img src="/images/no-result.png" alt="포이 이미지" />
+          <div className="mt-8 text-[#FFA09C]">
+            아직 게임을 진행하지 않았어요..
           </div>
-          플레이 했어요.
         </div>
-        가장 높은 점수는 {currentCount && Math.max(...currentCount)}
-        점이에요.
-      </div>
+      ) : (
+        <div className="text-[18px] flex flex-col items-center mt-16">
+          <div className="flex">
+            {targetGameTitle === 'number-game'
+              ? '숫자 맞추기 게임'
+              : '상황 추론 게임'}
+            을&nbsp;
+            <div className=" text-[#FFA09C] font-bold">
+              총 {currentCount && currentCount?.length}번,{' '}
+              {currentElapsedTime
+                ?.reduce((a, b) => Number(a) + Number(b))
+                ?.toFixed(2)}
+              초&nbsp;
+            </div>
+            플레이 했어요.
+          </div>
+          가장 높은 점수는 {currentCount && Math.max(...currentCount)}
+          점이에요.
+        </div>
+      )}
     </div>
   );
 };

@@ -55,6 +55,8 @@ const MainPage = () => {
             ? [...prevStatistic, ...numberGameResult]
             : [...numberGameResult];
         });
+      } else {
+        setNumberGameStatistic([]);
       }
 
       if (situationGameResult.length !== 0) {
@@ -63,6 +65,8 @@ const MainPage = () => {
             ? [...prevStatistic, ...situationGameResult]
             : [...situationGameResult];
         });
+      } else {
+        setSituationGameStatistic([]);
       }
     }
   }, [
