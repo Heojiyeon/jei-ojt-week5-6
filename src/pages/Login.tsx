@@ -58,7 +58,12 @@ const LoginPage = () => {
           onChange={setUserPassword}
         />
       </div>
-      <Button content="로그인" size="w-64 h-10" onClick={handleLogin} />
+      <Button
+        id="login"
+        content="로그인"
+        size="w-64 h-10"
+        onClick={handleLogin}
+      />
     </div>
   );
 };

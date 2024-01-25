@@ -25,7 +25,7 @@ const GameList = () => {
 
   return (
     <div>
-      <div className="col-span-3">
+      <div className="col-span-3 flex">
         {GAMES.map(game => (
           <Box key={game.id} info={game} onClick={() => handleBox(game.id)} />
         ))}

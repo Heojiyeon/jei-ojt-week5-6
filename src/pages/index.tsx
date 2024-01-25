@@ -73,9 +73,9 @@ const MainPage = () => {
   ]);
 
   return (
-    <div className="grid grid-cols-4">
+    <div className="grid grid-cols-4 h-[800px]">
       <Sidebar onClick={handleMenu} />
-      <div className="col-span-3">
+      <div className="col-span-3 bg-[#FFF8F8] w-[70vw] h-[80vh] mt-8 p-16">
         {contentTitle === 'game' && <GameList />}
         {contentTitle === 'statistics' && (
           <>
