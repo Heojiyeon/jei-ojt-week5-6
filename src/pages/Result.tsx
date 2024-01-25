@@ -1,7 +1,8 @@
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
 import { useEffect, useState } from 'react';
 
 import Result from '@/components/Result';
-import { getIndexedDB } from '@/data';
 import { GameResult, Games } from '@/types/problem';
 
 const ResultPage = () => {
@@ -9,25 +10,34 @@ const ResultPage = () => {
   const [currentElapsedTime, setCurrentElapsedTime] = useState<string>('');
   const [gameType, setGameType] = useState<Games | null>(null);
 
-  const fetchData = async (gameType: Games) => {
-    return await getIndexedDB({ gameType: gameType as Games });
+  const { data } = useQuery({
+    queryKey: ['result', gameType!],
+    queryFn: () => getResult(gameType as Games),
+    enabled: !!gameType,
+  });
+
+  const getResult = async (gameType: Games) => {
+    const response = await axios.get(`/result/${gameType}`);
+
+    return response.data;
   };
 
   useEffect(() => {
     const currentGameType = window.localStorage.getItem('gameType') as Games;
     setGameType(currentGameType);
 
-    const handleCountOfCorrect = async (gameType: Games) => {
-      const recievedResults = (await fetchData(
-        gameType as Games
-      )) as GameResult[];
+    const handleCountOfCorrect = () => {
+      const recievedResults = data as GameResult[];
       const recentResult = recievedResults.sort((a, b) => b.order - a.order)[0];
+
       setCurrentElapsedTime(recentResult.elapsedTime);
       setCurrentCountOfCorrect(recentResult.count as number);
     };
 
-    handleCountOfCorrect(currentGameType);
-  }, []);
+    if (data) {
+      handleCountOfCorrect();
+    }
+  }, [data]);
 
   return (
     <div className="flex justify-center">
