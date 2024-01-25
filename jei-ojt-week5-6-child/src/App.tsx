@@ -72,7 +72,7 @@ function App() {
           fontSize: 20,
           fill: '#0000FF',
           fontFamily: 'SUIT-Regular',
-          top: currentTop + 40,
+          top: currentTop - 40,
           left: currentLeft,
         });
 
@@ -84,7 +84,7 @@ function App() {
           fontSize: 20,
           fill: '#E5001A',
           fontFamily: 'SUIT-Regular',
-          top: currentTop + 40,
+          top: currentTop - 40,
           left: currentLeft,
         });
 
