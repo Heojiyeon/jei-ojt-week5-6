@@ -9,6 +9,7 @@ import {
   numberGameStatisticAtom,
   situationGameStatisticAtom,
 } from '@/atoms/statistics';
+import Badge from '@/components/Badge';
 import GameList from '@/components/GameList';
 import Sidebar from '@/components/Sidebar';
 import Statistics from '@/components/Statistic';
@@ -128,6 +129,7 @@ const MainPage = () => {
                 <Statistics targetGameTitle={targetGameTitle} />
               </div>
             )}
+            {contentTitle === 'badge' && <Badge />}
           </div>
         </div>
       )}
