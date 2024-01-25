@@ -16,6 +16,7 @@ const Button = ({ id, content, size, onClick }: ButtonProp) => {
     'border rounded-full border-none bg-[#E5001A] text-[#ffffff]';
   const restButtonStyle =
     'border rounded-full bg-[#ffffff] border-solid border-[#E3E3E3] text-[#A5A5A5]';
+
   return (
     <button
       className={`${size} ${

@@ -11,13 +11,15 @@ import {
 } from 'chart.js';
 import { useAtomValue } from 'jotai';
 import { useEffect, useState } from 'react';
-import { Bar, Line } from 'react-chartjs-2';
 
 import {
   numberGameStatisticAtom,
   situationGameStatisticAtom,
 } from '@/atoms/statistics';
 import { GameResult, Games } from '@/types/problem';
+
+import BarChart from './chart/BarChart';
+import LineChart from './chart/LineChart';
 
 ChartJS.register(
   CategoryScale,
@@ -150,72 +152,15 @@ const Statistics = ({ targetGameTitle }: StatisticsProp) => {
         });
       }
     };
+
     handleCurrentData();
   }, [currentCount, currentLabels, currentElapsedTime]);
 
   return (
     <div className="mt-12">
       <div className="flex justify-center items-center">
-        {countData && (
-          <Bar
-            data={countData}
-            options={{
-              responsive: false,
-              devicePixelRatio: 4,
-              plugins: {
-                legend: {
-                  labels: {
-                    font: {
-                      size: 10,
-                    },
-                  },
-                },
-              },
-              scales: {
-                y: {
-                  suggestedMin: 0,
-                  suggestedMax: 100,
-                },
-              },
-            }}
-            style={{
-              position: 'relative',
-              height: '38vh',
-              width: '28vw',
-              margin: '1rem',
-            }}
-          />
-        )}
-        {timeData && (
-          <Line
-            data={timeData}
-            options={{
-              responsive: false,
-              devicePixelRatio: 4,
-              plugins: {
-                legend: {
-                  labels: {
-                    font: {
-                      size: 10,
-                    },
-                  },
-                },
-              },
-              scales: {
-                y: {
-                  suggestedMin: 0,
-                  suggestedMax: 100,
-                },
-              },
-            }}
-            style={{
-              position: 'relative',
-              height: '38vh',
-              width: '28vw',
-              margin: '1rem',
-            }}
-          />
-        )}
+        {countData && <BarChart countData={countData} />}
+        {timeData && <LineChart timeData={timeData} />}
       </div>
 
       {!currentTargetStatistic ? (
