@@ -1,5 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import Button from '@/components/common/Button';
 import Input from '@/components/common/Input';
@@ -7,6 +8,10 @@ import Input from '@/components/common/Input';
 const LoginPage = () => {
   const [userId, setUserId] = useState('');
   const [userPassword, setUserPassword] = useState('');
+
+  const [isLoading, setIsLoading] = useState(true);
+
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
     const formData = new FormData();
@@ -17,7 +22,9 @@ const LoginPage = () => {
       const response: AxiosResponse = await axios.post('/login', formData);
 
       if (response.status === 200) {
-        window.location.replace('/main');
+        window.localStorage.setItem('token', response.data.token);
+
+        navigate('/main');
       }
     } catch (error: unknown) {
       if (error instanceof AxiosError) {
@@ -32,39 +39,55 @@ const LoginPage = () => {
     }
   };
 
+  useEffect(() => {
+    const token = window.localStorage.getItem('token');
+
+    if (token) {
+      navigate('/main');
+    } else {
+      setIsLoading(false);
+    }
+  }, [navigate]);
+
   return (
-    <div className="flex flex-col items-center mt-40">
-      <div className="flex flex-col items-center">
-        <div className="text-[#E5001A] text-[50px] font-bold">JEI</div>
-        <div className="text-[30px] font-bold">학습서비스</div>
-      </div>
-      <div className="flex flex-col m-12">
-        <label htmlFor="id">아이디</label>
-        <Input
-          id="id"
-          type="text"
-          size="w-64 h-10"
-          value={userId}
-          onChange={setUserId}
-        />
-        <label htmlFor="password" className="mt-4">
-          비밀번호
-        </label>
-        <Input
-          id="password"
-          type="password"
-          size="w-64 h-10"
-          value={userPassword}
-          onChange={setUserPassword}
-        />
-      </div>
-      <Button
-        id="login"
-        content="로그인"
-        size="w-64 h-10"
-        onClick={handleLogin}
-      />
-    </div>
+    <>
+      {isLoading ? (
+        <div>loading...</div>
+      ) : (
+        <div className="flex flex-col items-center mt-40">
+          <div className="flex flex-col items-center">
+            <div className="text-[#E5001A] text-[50px] font-bold">JEI</div>
+            <div className="text-[30px] font-bold">학습서비스</div>
+          </div>
+          <div className="flex flex-col m-12">
+            <label htmlFor="id">아이디</label>
+            <Input
+              id="id"
+              type="text"
+              size="w-64 h-10"
+              value={userId}
+              onChange={setUserId}
+            />
+            <label htmlFor="password" className="mt-4">
+              비밀번호
+            </label>
+            <Input
+              id="password"
+              type="password"
+              size="w-64 h-10"
+              value={userPassword}
+              onChange={setUserPassword}
+            />
+          </div>
+          <Button
+            id="login"
+            content="로그인"
+            size="w-64 h-10"
+            onClick={handleLogin}
+          />
+        </div>
+      )}
+    </>
   );
 };
 

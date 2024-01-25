@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useSetAtom } from 'jotai';
 import { useEffect, useState } from 'react';
 import { TbPlayerTrackNextFilled } from 'react-icons/tb';
+import { useNavigate } from 'react-router-dom';
 
 import {
   numberGameStatisticAtom,
@@ -17,8 +18,22 @@ const MainPage = () => {
   const [contentTitle, setContentTitle] = useState<ContentTitle>('game');
   const [targetGameTitle, setTargetGameTitle] = useState<Games>('number-game');
 
+  const [isLoading, setIsLoading] = useState(true);
+
   const setNumberGameStatistic = useSetAtom(numberGameStatisticAtom);
   const setSituationGameStatistic = useSetAtom(situationGameStatisticAtom);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = window.localStorage.getItem('token');
+
+    if (!token) {
+      navigate('/');
+    } else {
+      setIsLoading(false);
+    }
+  }, [navigate]);
 
   const handleMenu = (title: ContentTitle) => {
     setContentTitle(title);
@@ -77,40 +92,46 @@ const MainPage = () => {
   ]);
 
   return (
-    <div className="grid grid-cols-4 h-[800px] ">
-      <Sidebar onClick={handleMenu} />
-      <div className="col-span-3 bg-[#FFF8F8] w-[70vw] h-[80vh] mt-8 p-16">
-        {contentTitle === 'game' && <GameList />}
-        {contentTitle === 'statistics' && (
-          <div>
-            <div className="flex justify-end">
-              <button
-                onClick={() =>
-                  setTargetGameTitle(prevTargetGameTitle =>
-                    prevTargetGameTitle === 'number-game'
-                      ? 'situation-game'
-                      : 'number-game'
-                  )
-                }
-                style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  margin: 0,
-                }}
-              >
-                {targetGameTitle === 'number-game'
-                  ? '상황 추론 게임 통계'
-                  : '숫자 맞추기 게임 통계'}
-                &nbsp;
-                <TbPlayerTrackNextFilled />
-              </button>
-            </div>
-            <Statistics targetGameTitle={targetGameTitle} />
+    <>
+      {isLoading ? (
+        <div>loading...</div>
+      ) : (
+        <div className="grid grid-cols-4 h-[800px] ">
+          <Sidebar onClick={handleMenu} />
+          <div className="col-span-3 bg-[#FFF8F8] w-[70vw] h-[80vh] mt-8 p-16">
+            {contentTitle === 'game' && <GameList />}
+            {contentTitle === 'statistics' && (
+              <div>
+                <div className="flex justify-end">
+                  <button
+                    onClick={() =>
+                      setTargetGameTitle(prevTargetGameTitle =>
+                        prevTargetGameTitle === 'number-game'
+                          ? 'situation-game'
+                          : 'number-game'
+                      )
+                    }
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      margin: 0,
+                    }}
+                  >
+                    {targetGameTitle === 'number-game'
+                      ? '상황 추론 게임 통계'
+                      : '숫자 맞추기 게임 통계'}
+                    &nbsp;
+                    <TbPlayerTrackNextFilled />
+                  </button>
+                </div>
+                <Statistics targetGameTitle={targetGameTitle} />
+              </div>
+            )}
           </div>
-        )}
-      </div>
-    </div>
+        </div>
+      )}
+    </>
   );
 };
 

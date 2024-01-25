@@ -18,6 +18,7 @@ export const handlers = [
     if (userId === VITE_USER_NAME && userPassword === VITE_USER_PASSWORD) {
       return HttpResponse.json({
         name: '허지연',
+        token: 'udisufi28349duijn',
       });
     } else {
       return HttpResponse.error();
