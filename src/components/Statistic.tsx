@@ -142,37 +142,85 @@ const Statistics = ({ targetGameTitle }: StatisticsProp) => {
   }, [currentCount, currentLabels, currentElapsedTime]);
 
   return (
-    <div>
-      <div>
+    <div className="mt-12">
+      <div className="flex justify-center items-center">
         {countData && (
           <Bar
             data={countData}
-            options={{ responsive: false, devicePixelRatio: 4 }}
-            style={{ position: 'relative', height: '30vh', width: '30vw' }}
+            options={{
+              responsive: false,
+              devicePixelRatio: 4,
+              plugins: {
+                legend: {
+                  labels: {
+                    font: {
+                      size: 10,
+                    },
+                  },
+                },
+              },
+              scales: {
+                y: {
+                  suggestedMin: 0,
+                  suggestedMax: 100,
+                },
+              },
+            }}
+            style={{
+              position: 'relative',
+              height: '38vh',
+              width: '28vw',
+              margin: '1rem',
+            }}
           />
         )}
         {timeData && (
           <Line
             data={timeData}
-            options={{ responsive: false, devicePixelRatio: 4 }}
-            style={{ position: 'relative', height: '30vh', width: '30vw' }}
+            options={{
+              responsive: false,
+              devicePixelRatio: 4,
+              plugins: {
+                legend: {
+                  labels: {
+                    font: {
+                      size: 10,
+                    },
+                  },
+                },
+              },
+              scales: {
+                y: {
+                  suggestedMin: 0,
+                  suggestedMax: 100,
+                },
+              },
+            }}
+            style={{
+              position: 'relative',
+              height: '38vh',
+              width: '28vw',
+              margin: '1rem',
+            }}
           />
         )}
       </div>
-      <div className="text-[18px]">
-        {targetGameTitle === 'number-game'
-          ? '숫자 맞추기 게임'
-          : '상황 추론 게임'}
-        을 총{' '}
-        <div>
-          {currentCount && currentCount?.length}번,{' '}
-          {currentElapsedTime
-            ?.reduce((a, b) => Number(a) + Number(b))
-            ?.toFixed(2)}
-          초{' '}
+      <div className="text-[18px] flex flex-col items-center mt-16">
+        <div className="flex">
+          {targetGameTitle === 'number-game'
+            ? '숫자 맞추기 게임'
+            : '상황 추론 게임'}
+          을&nbsp;
+          <div className=" text-[#FFA09C] font-bold">
+            총 {currentCount && currentCount?.length}번,{' '}
+            {currentElapsedTime
+              ?.reduce((a, b) => Number(a) + Number(b))
+              ?.toFixed(2)}
+            초&nbsp;
+          </div>
+          플레이 했어요.
         </div>
-        플레이 했어요.
-        <br /> 가장 높은 점수는 {currentCount && Math.max(...currentCount)}
+        가장 높은 점수는 {currentCount && Math.max(...currentCount)}
         점이에요.
       </div>
     </div>

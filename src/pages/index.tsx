@@ -73,25 +73,37 @@ const MainPage = () => {
   ]);
 
   return (
-    <div className="grid grid-cols-4 h-[800px]">
+    <div className="grid grid-cols-4 h-[800px] ">
       <Sidebar onClick={handleMenu} />
       <div className="col-span-3 bg-[#FFF8F8] w-[70vw] h-[80vh] mt-8 p-16">
         {contentTitle === 'game' && <GameList />}
         {contentTitle === 'statistics' && (
-          <>
-            <button
-              onClick={() =>
-                setTargetGameTitle(prevTargetGameTitle =>
-                  prevTargetGameTitle === 'number-game'
-                    ? 'situation-game'
-                    : 'number-game'
-                )
-              }
-            >
-              <TbPlayerTrackNextFilled />
-            </button>
+          <div>
+            <div className="flex justify-end">
+              <button
+                onClick={() =>
+                  setTargetGameTitle(prevTargetGameTitle =>
+                    prevTargetGameTitle === 'number-game'
+                      ? 'situation-game'
+                      : 'number-game'
+                  )
+                }
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  margin: 0,
+                }}
+              >
+                {targetGameTitle === 'number-game'
+                  ? '상황 추론 게임 통계'
+                  : '숫자 맞추기 게임 통계'}
+                &nbsp;
+                <TbPlayerTrackNextFilled />
+              </button>
+            </div>
             <Statistics targetGameTitle={targetGameTitle} />
-          </>
+          </div>
         )}
       </div>
     </div>
