@@ -11,7 +11,7 @@ const Input = ({ id, type, size, value, onChange }: InputProp) => {
     <input
       id={id}
       type={type}
-      className={`container ${size}`}
+      className={`${size} border rounded-full border-[#E3E3E3] outline-none focus:border-[#FFA09C] p-4`}
       value={value}
       onChange={e => onChange(e.target.value)}
     />

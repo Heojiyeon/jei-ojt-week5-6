@@ -33,24 +33,32 @@ const LoginPage = () => {
   };
 
   return (
-    <div>
-      <label htmlFor="id">아이디</label>
-      <Input
-        id="id"
-        type="text"
-        size="w-64 h-10"
-        value={userId}
-        onChange={setUserId}
-      />
-      <label htmlFor="password">비밀번호</label>
-      <Input
-        id="password"
-        type="password"
-        size="w-64 h-10"
-        value={userPassword}
-        onChange={setUserPassword}
-      />
-      <Button content="로그인" onClick={handleLogin} />
+    <div className="flex flex-col items-center mt-40">
+      <div className="flex flex-col items-center">
+        <div className="text-[#E5001A] text-[50px] font-bold">JEI</div>
+        <div className="text-[30px] font-bold">학습서비스</div>
+      </div>
+      <div className="flex flex-col m-12">
+        <label htmlFor="id">아이디</label>
+        <Input
+          id="id"
+          type="text"
+          size="w-64 h-10"
+          value={userId}
+          onChange={setUserId}
+        />
+        <label htmlFor="password" className="mt-4">
+          비밀번호
+        </label>
+        <Input
+          id="password"
+          type="password"
+          size="w-64 h-10"
+          value={userPassword}
+          onChange={setUserPassword}
+        />
+      </div>
+      <Button content="로그인" size="w-64 h-10" onClick={handleLogin} />
     </div>
   );
 };
