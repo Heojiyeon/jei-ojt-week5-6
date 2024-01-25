@@ -11,7 +11,7 @@ const GamePage = () => {
   }, []);
 
   return (
-    <div>
+    <div className="flex justify-center items-center mt-24">
       <Iframe />
     </div>
   );

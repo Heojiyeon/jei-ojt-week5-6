@@ -144,16 +144,6 @@ const Statistics = ({ targetGameTitle }: StatisticsProp) => {
   return (
     <div>
       <div>
-        {targetGameTitle === 'number-game'
-          ? '숫자 맞추기 게임'
-          : '상황 추론 게임'}
-        을 총 {currentCount && currentCount?.length}번,{' '}
-        {currentElapsedTime?.reduce((a, b) => Number(a) + Number(b))}초 플레이
-        했어요.
-        <br /> 가장 높은 점수는 {currentCount && Math.max(...currentCount)}
-        점이에요.
-      </div>
-      <div>
         {countData && (
           <Bar
             data={countData}
@@ -168,6 +158,22 @@ const Statistics = ({ targetGameTitle }: StatisticsProp) => {
             style={{ position: 'relative', height: '30vh', width: '30vw' }}
           />
         )}
+      </div>
+      <div className="text-[18px]">
+        {targetGameTitle === 'number-game'
+          ? '숫자 맞추기 게임'
+          : '상황 추론 게임'}
+        을 총{' '}
+        <div>
+          {currentCount && currentCount?.length}번,{' '}
+          {currentElapsedTime
+            ?.reduce((a, b) => Number(a) + Number(b))
+            ?.toFixed(2)}
+          초{' '}
+        </div>
+        플레이 했어요.
+        <br /> 가장 높은 점수는 {currentCount && Math.max(...currentCount)}
+        점이에요.
       </div>
     </div>
   );

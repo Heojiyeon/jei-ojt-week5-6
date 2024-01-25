@@ -130,8 +130,8 @@
               }
             }
           ],
-          "text": "아이가 혼자 물감 놀이를 해요.",
-          "top": 176,
+          "text": "1. 아이가 혼자 물감 놀이를 해요.",
+          "top": 110,
           "type": "text",
           "width": 405
         }
@@ -269,8 +269,8 @@
               }
             }
           ],
-          "text": "곰돌이가 풍선을 불고 있어요.",
-          "top": 176,
+          "text": "2. 곰돌이가 풍선을 불고 있어요.",
+          "top": 110,
           "type": "text",
           "width": 405
         }
@@ -389,8 +389,8 @@
           "splitByGrapheme": false,
           "stroke": "#3c3c3c",
           "styles": [],
-          "text": "곤충 가족이 식사를 해요.",
-          "top": 176,
+          "text": "3. 곤충 가족이 식사를 해요.",
+          "top": 110,
           "type": "text",
           "width": 405
         }
@@ -505,13 +505,13 @@
           "fontFamily": "SUIT-Regular",
           "fontSize": 30,
           "height": 33.9,
-          "left": 233,
+          "left": 220,
           "minWidth": 20,
           "splitByGrapheme": false,
           "stroke": "#3c3c3c",
           "styles": [
             {
-              "end": 18,
+              "end": 21,
               "start": 0,
               "style": {
                 "deltaY": 0,
@@ -529,10 +529,10 @@
               }
             }
           ],
-          "text": "곰돌이가 벌에 쏘여 울고 있어요.",
-          "top": 176,
+          "text": "4. 곰돌이가 벌에 쏘여 울고 있어요.",
+          "top": 110,
           "type": "text",
-          "width": 405
+          "width": 410
         }
       }
     ]
@@ -669,10 +669,10 @@
               }
             }
           ],
-          "text": "왕자님이 캥거루 가족에게 고양이를 봤는지 묻고 있어요.",
-          "top": 176,
+          "text": "5. 왕자님이 캥거루 가족에게 고양이를 봤는지 묻고 있어요.",
+          "top": 110,
           "type": "text",
-          "width": 684
+          "width": 690
         }
       }
     ]

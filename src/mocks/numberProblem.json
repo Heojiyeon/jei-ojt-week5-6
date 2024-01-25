@@ -16,7 +16,7 @@
           "stroke": "#3c3c3c",
           "styles": [],
           "text": "6",
-          "top": 421,
+          "top": 450,
           "type": "text",
           "width": 43
         }
@@ -35,7 +35,7 @@
           "stroke": "#3c3c3c",
           "styles": [],
           "text": "5",
-          "top": 421,
+          "top": 450,
           "type": "text",
           "width": 37
         }
@@ -54,7 +54,7 @@
           "stroke": "#3c3c3c",
           "styles": [],
           "text": "9",
-          "top": 421,
+          "top": 450,
           "type": "text",
           "width": 43
         }
@@ -88,7 +88,7 @@
           "stroke": "#3c3c3c",
           "styles": [],
           "text": "5",
-          "top": 422,
+          "top": 450,
           "type": "text",
           "width": 37
         }
@@ -105,7 +105,7 @@
           "stroke": "#3c3c3c",
           "styles": [],
           "text": "6",
-          "top": 422,
+          "top": 450,
           "type": "text",
           "width": 37
         }
@@ -122,7 +122,7 @@
           "stroke": "#3c3c3c",
           "styles": [],
           "text": "9",
-          "top": 422,
+          "top": 450,
           "type": "text",
           "width": 37
         }
@@ -133,13 +133,13 @@
           "fontFamily": "SUIT-Regular",
           "fontSize": 30,
           "height": 33.9,
-          "left": 234,
+          "left": 230,
           "minWidth": 20,
           "splitByGrapheme": false,
           "stroke": "#3c3c3c",
           "styles": [],
-          "text": "알맞은 수를 입력해주세요.",
-          "top": 100,
+          "text": "1. 올바른 수를 선택해주세요.",
+          "top": 80,
           "type": "text",
           "width": 358
         }
@@ -163,7 +163,7 @@
           "stroke": "#3c3c3c",
           "styles": [],
           "text": "2",
-          "top": 424,
+          "top": 450,
           "type": "text",
           "width": 33
         }
@@ -182,7 +182,7 @@
           "stroke": "#3c3c3c",
           "styles": [],
           "text": "3",
-          "top": 424,
+          "top": 450,
           "type": "text",
           "width": 33
         }
@@ -201,7 +201,7 @@
           "stroke": "#3c3c3c",
           "styles": [],
           "text": "4",
-          "top": 424,
+          "top": 450,
           "type": "text",
           "width": 33
         }
@@ -218,7 +218,7 @@
           "scaleX": 0.29,
           "scaleY": 0.29,
           "src": "https://sol-api.esls.io/images/A1/AI00000152.png",
-          "top": 154,
+          "top": 180,
           "type": "image",
           "width": 1201
         }
@@ -235,7 +235,7 @@
           "stroke": "#3c3c3c",
           "styles": [],
           "text": "2",
-          "top": 424,
+          "top": 450,
           "type": "text",
           "width": 33
         }
@@ -252,7 +252,7 @@
           "stroke": "#3c3c3c",
           "styles": [],
           "text": "3",
-          "top": 424,
+          "top": 450,
           "type": "text",
           "width": 33
         }
@@ -269,7 +269,7 @@
           "stroke": "#3c3c3c",
           "styles": [],
           "text": "4",
-          "top": 424,
+          "top": 450,
           "type": "text",
           "width": 33
         }
@@ -280,13 +280,13 @@
           "fontFamily": "SUIT-Regular",
           "fontSize": 30,
           "height": 33.9,
-          "left": 234,
+          "left": 230,
           "minWidth": 20,
           "splitByGrapheme": false,
           "stroke": "#3c3c3c",
           "styles": [],
-          "text": "알맞은 수를 입력해주세요.",
-          "top": 100,
+          "text": "2. 올바른 수를 선택해주세요.",
+          "top": 80,
           "type": "text",
           "width": 358
         }
@@ -310,7 +310,7 @@
           "stroke": "#3c3c3c",
           "styles": [],
           "text": "6",
-          "top": 448,
+          "top": 470,
           "type": "text",
           "width": 41
         }
@@ -329,7 +329,7 @@
           "stroke": "#3c3c3c",
           "styles": [],
           "text": "10",
-          "top": 448,
+          "top": 470,
           "type": "text",
           "width": 41
         }
@@ -348,7 +348,7 @@
           "stroke": "#3c3c3c",
           "styles": [],
           "text": "3",
-          "top": 448,
+          "top": 470,
           "type": "text",
           "width": 41
         }
@@ -412,7 +412,7 @@
           "stroke": "#3c3c3c",
           "styles": [],
           "text": "6",
-          "top": 448,
+          "top": 470,
           "type": "text",
           "width": 41
         }
@@ -429,7 +429,7 @@
           "stroke": "#3c3c3c",
           "styles": [],
           "text": "10",
-          "top": 448,
+          "top": 470,
           "type": "text",
           "width": 41
         }
@@ -446,7 +446,7 @@
           "stroke": "#3c3c3c",
           "styles": [],
           "text": "3",
-          "top": 448,
+          "top": 470,
           "type": "text",
           "width": 41
         }
@@ -457,13 +457,13 @@
           "fontFamily": "SUIT-Regular",
           "fontSize": 30,
           "height": 33.9,
-          "left": 234,
+          "left": 230,
           "minWidth": 20,
           "splitByGrapheme": false,
           "stroke": "#3c3c3c",
           "styles": [],
-          "text": "알맞은 수를 입력해주세요.",
-          "top": 100,
+          "text": "3. 올바른 수를 선택해주세요.",
+          "top": 80,
           "type": "text",
           "width": 358
         }
@@ -488,7 +488,7 @@
             "stroke": "#3c3c3c",
             "styles": [],
             "text": "3",
-            "top": 392,
+            "top": 460,
             "type": "text",
             "width": 56
           }
@@ -509,7 +509,7 @@
             "stroke": "#3c3c3c",
             "styles": [],
             "text": "8",
-            "top": 392,
+            "top": 460,
             "type": "text",
             "width": 56
           }
@@ -530,7 +530,7 @@
             "stroke": "#3c3c3c",
             "styles": [],
             "text": "2",
-            "top": 392,
+            "top": 460,
             "type": "text",
             "width": 56
           }
@@ -565,7 +565,7 @@
           "stroke": "#3c3c3c",
           "styles": [],
           "text": "3",
-          "top": 392,
+          "top": 460,
           "type": "text",
           "width": 56
         }
@@ -582,7 +582,7 @@
           "stroke": "#3c3c3c",
           "styles": [],
           "text": "8",
-          "top": 392,
+          "top": 460,
           "type": "text",
           "width": 56
         }
@@ -599,7 +599,7 @@
           "stroke": "#3c3c3c",
           "styles": [],
           "text": "2",
-          "top": 392,
+          "top": 460,
           "type": "text",
           "width": 56
         }
@@ -610,13 +610,13 @@
           "fontFamily": "SUIT-Regular",
           "fontSize": 30,
           "height": 33.9,
-          "left": 234,
+          "left": 230,
           "minWidth": 20,
           "splitByGrapheme": false,
           "stroke": "#3c3c3c",
           "styles": [],
-          "text": "알맞은 수를 입력해주세요.",
-          "top": 100,
+          "text": "4. 올바른 수를 선택해주세요.",
+          "top": 80,
           "type": "text",
           "width": 358
         }
@@ -640,7 +640,7 @@
           "stroke": "#3c3c3c",
           "styles": [],
           "text": "7",
-          "top": 403,
+          "top": 460,
           "type": "text",
           "width": 48
         }
@@ -659,7 +659,7 @@
           "stroke": "#3c3c3c",
           "styles": [],
           "text": "3",
-          "top": 403,
+          "top": 460,
           "type": "text",
           "width": 48
         }
@@ -678,7 +678,7 @@
           "stroke": "#3c3c3c",
           "styles": [],
           "text": "4",
-          "top": 403,
+          "top": 460,
           "type": "text",
           "width": 48
         }
@@ -712,7 +712,7 @@
           "stroke": "#3c3c3c",
           "styles": [],
           "text": "7",
-          "top": 403,
+          "top": 460,
           "type": "text",
           "width": 48
         }
@@ -729,7 +729,7 @@
           "stroke": "#3c3c3c",
           "styles": [],
           "text": "3",
-          "top": 403,
+          "top": 460,
           "type": "text",
           "width": 48
         }
@@ -746,7 +746,7 @@
           "stroke": "#3c3c3c",
           "styles": [],
           "text": "4",
-          "top": 403,
+          "top": 460,
           "type": "text",
           "width": 48
         }
@@ -757,13 +757,13 @@
           "fontFamily": "SUIT-Regular",
           "fontSize": 30,
           "height": 33.9,
-          "left": 234,
+          "left": 230,
           "minWidth": 20,
           "splitByGrapheme": false,
           "stroke": "#3c3c3c",
           "styles": [],
-          "text": "알맞은 수를 입력해주세요.",
-          "top": 100,
+          "text": "5. 올바른 수를 선택해주세요.",
+          "top": 80,
           "type": "text",
           "width": 358
         }
