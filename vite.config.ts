@@ -14,7 +14,6 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: 'src/main.tsx', // main.html에 대한 엔트리 포인트
-        problem: 'src/problemSrc/ProblemMain.tsx', // another.html에 대한 엔트리 포인트
       },
     },
   },
