@@ -2,8 +2,8 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
-import { addIndexedDB } from '@/data';
-import { Games } from '@/types/problem';
+import { addIndexedDB, getIndexedDB } from '@/data';
+import { GameResult, Games } from '@/types/problem';
 
 const Iframe = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -16,12 +16,15 @@ const Iframe = () => {
     queryKey: ['problem', gameType],
     queryFn: () => getProblem(gameType as Games),
     enabled: isLoaded && gameType ? true : false,
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
   });
+
   const getProblem = async (gameType: Games) => {
     const response = await axios.get(`/problem/${gameType}`);
     return response.data;
+  };
+
+  const fetchData = async (gameType: Games) => {
+    return await getIndexedDB({ gameType });
   };
 
   useEffect(() => {
@@ -51,7 +54,11 @@ const Iframe = () => {
 
         // 게임 유형에 따라 결과를 저장하는 함수
         const addResultByGameType = async (gameType: Games) => {
-          const currentLength = data.length;
+          const checkResultLength = async () => {
+            const currentLength = (await fetchData(gameType)) as GameResult[];
+            return currentLength.length;
+          };
+          const currentLength = await checkResultLength();
 
           // length에 따라 order 부여 후 DB에 add
           const currentResult = {

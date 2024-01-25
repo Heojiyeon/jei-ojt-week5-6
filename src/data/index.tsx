@@ -49,7 +49,7 @@ export const addIndexedDB = ({ gameType, result }: addIndexedDBProp) => {
   /**
    * 트랜잭션(DB 상태 변화) 핸들링
    */
-  const createResultByGameType = (gameType: Games) => {
+  const createResultByGameType = (gameType: Games, result: GameResult) => {
     const transaction = db.transaction([`${gameType}-result`], 'readwrite');
     const gameResultStore = transaction.objectStore(`${gameType}-result`);
 
@@ -67,10 +67,10 @@ export const addIndexedDB = ({ gameType, result }: addIndexedDBProp) => {
 
     switch (gameType) {
       case 'number-game':
-        createResultByGameType('number-game');
+        createResultByGameType('number-game', result);
         break;
       case 'situation-game':
-        createResultByGameType('situation-game');
+        createResultByGameType('situation-game', result);
         break;
 
       default:

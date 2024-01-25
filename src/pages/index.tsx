@@ -30,15 +30,11 @@ const MainPage = () => {
   const { data: numberData } = useQuery({
     queryKey: ['numberGameResult'],
     queryFn: () => getResult('number-game'),
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
   });
 
   const { data: situationData } = useQuery({
     queryKey: ['situationGameResult'],
     queryFn: () => getResult('situation-game'),
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
   });
 
   const getResult = async (gameType: Games) => {

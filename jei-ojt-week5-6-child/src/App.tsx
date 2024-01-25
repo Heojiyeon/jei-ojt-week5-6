@@ -68,8 +68,8 @@ function App() {
 
       // 정답인 경우
       if (correctComponentName === currentComponentName) {
-        console.log('정답 이라능!');
         setCountOfCorrect(prevCountOfCorrect => (prevCountOfCorrect += 1));
+        console.log('정답 이라능!', countOfCorrect, '개');
 
         bubbleText = new fabric.Text('정답입니다!', {
           fontSize: 30,
