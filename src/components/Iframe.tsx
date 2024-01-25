@@ -2,8 +2,8 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
-import { addIndexedDB, getIndexedDB } from '@/data';
-import { GameResult, Games } from '@/types/problem';
+import { addIndexedDB } from '@/data';
+import { Games } from '@/types/problem';
 
 const Iframe = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -12,10 +12,11 @@ const Iframe = () => {
   /**
    * 문제 데이터 요청
    */
-  const { data } = useQuery({
+  const { data, isLoading, isSuccess } = useQuery({
     queryKey: ['problem', gameType],
     queryFn: () => getProblem(gameType as Games),
     enabled: isLoaded && gameType ? true : false,
+    refetchOnMount: false,
   });
 
   const getProblem = async (gameType: Games) => {
@@ -23,8 +24,18 @@ const Iframe = () => {
     return response.data;
   };
 
-  const fetchData = async (gameType: Games) => {
-    return await getIndexedDB({ gameType });
+  /**
+   * 결과 데이터 요청
+   */
+  const { data: resultData, isPending: isResultPending } = useQuery({
+    queryKey: ['result', gameType],
+    queryFn: () => getResult(gameType as Games),
+  });
+
+  const getResult = async (gameType: Games) => {
+    const response = await axios.get(`/result/${gameType}`);
+
+    return response.data;
   };
 
   useEffect(() => {
@@ -43,6 +54,7 @@ const Iframe = () => {
         const calculateElapsedTime = () => {
           const endTime = new Date().getTime();
           const startTime = window.localStorage.getItem('gameStartTime');
+
           let currentElapsedTime: number;
 
           if (startTime !== null) {
@@ -50,15 +62,12 @@ const Iframe = () => {
             return currentElapsedTime;
           }
         };
+
         const elapsedTime = calculateElapsedTime()!;
 
         // 게임 유형에 따라 결과를 저장하는 함수
         const addResultByGameType = async (gameType: Games) => {
-          const checkResultLength = async () => {
-            const currentLength = (await fetchData(gameType)) as GameResult[];
-            return currentLength.length;
-          };
-          const currentLength = await checkResultLength();
+          const currentLength = await resultData.length;
 
           // length에 따라 order 부여 후 DB에 add
           const currentResult = {
@@ -90,7 +99,7 @@ const Iframe = () => {
         window.removeEventListener('message', handleMessage);
       };
     }
-  }, [data, gameType]);
+  }, [data, gameType, isSuccess, resultData]);
 
   useEffect(() => {
     const currentGameType = window.localStorage.getItem('gameType');
@@ -101,15 +110,19 @@ const Iframe = () => {
   }, []);
 
   return (
-    <iframe
-      src="../../public/index.html"
-      width={900}
-      height={700}
-      title="game content"
-      onLoad={() => setIsLoaded(true)}
-    >
-      게임 컨텐츠를 불러오고 있습니다
-    </iframe>
+    <>
+      {isLoading && <div>문제를 불러오고 있습니다</div>}
+      {isSuccess && isResultPending && <div>결과를 불러오고 있습니다</div>}
+      <iframe
+        src="../../public/index.html"
+        width={900}
+        height={700}
+        title="game content"
+        onLoad={() => setIsLoaded(true)}
+      >
+        게임 컨텐츠를 불러오고 있습니다
+      </iframe>
+    </>
   );
 };
 
