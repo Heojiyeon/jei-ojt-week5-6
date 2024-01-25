@@ -1,4 +1,6 @@
 import { useSetAtom } from 'jotai';
+import { IoIosLogOut } from 'react-icons/io';
+import { useNavigate } from 'react-router-dom';
 
 import { menuAtom } from '@/atoms/menu';
 import { MENUS } from '@/constants/menu';
@@ -14,12 +16,21 @@ type SidebarProp = {
 const Sidebar = ({ onClick }: SidebarProp) => {
   const setMenu = useSetAtom(menuAtom);
 
+  const navigate = useNavigate();
+
   const handleMenuButton = (id: ContentTitle) => {
     setMenu(id);
     onClick(id);
   };
+
+  const handleLogout = () => {
+    window.localStorage.removeItem('token');
+
+    navigate('/');
+  };
+
   return (
-    <div className="h-[80vh] col-span-1 flex-col items-center m-8 p-8 border-r border-soli border-[#E3E3E3]">
+    <div className="relative h-[80vh] col-span-1 justify-center m-8 border-r border-solid border-[#E3E3E3]">
       <div id="sidebar-profile" className="flex justify-center">
         <Profile name={'허지연'} />
       </div>
@@ -33,6 +44,16 @@ const Sidebar = ({ onClick }: SidebarProp) => {
             onClick={() => handleMenuButton(menu.id as ContentTitle)}
           />
         ))}
+      </div>
+      <div className="flex justify-center align-center">
+        <div
+          className="flex justify-center items-center absolute bottom-0
+        text-[20px] text-[#A5A5A5] hover:cursor-pointer"
+          onClick={handleLogout}
+        >
+          로그아웃
+          <IoIosLogOut />
+        </div>
       </div>
     </div>
   );
