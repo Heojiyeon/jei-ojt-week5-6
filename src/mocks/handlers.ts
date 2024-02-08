@@ -31,10 +31,9 @@ export const handlers = [
     switch (gameType) {
       case 'number-game':
         return HttpResponse.json(numberProblem);
-        break;
+
       case 'situation-game':
         return HttpResponse.json(situationProblem);
-        break;
 
       default:
         break;
@@ -52,12 +51,11 @@ export const handlers = [
           return (await getIndexedDB({
             gameType: 'number-game',
           })) as GameResult[];
-          break;
+
         case 'situation-game':
           return (await getIndexedDB({
             gameType: 'situation-game',
           })) as GameResult[];
-          break;
 
         default:
           break;
